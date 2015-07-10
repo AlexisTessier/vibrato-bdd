@@ -1,0 +1,35 @@
+{
+  "name": "vibrato-bdd",
+  "version": "0.0.1",
+  "description": "A behaviour driven development framework to test code both on server and on client",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/index.js"
+  },
+  "keywords": [
+    "vibrato",
+    "BDD",
+    "behaviour",
+    "driven",
+    "development",
+    "isomorphic"
+  ],
+  "author": "Alexis Tessier <alexis.tessier@designdo.fr>",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-batch": "^1.0.5",
+    "gulp-plumber": "^1.0.1",
+    "gulp-traceur": "^0.17.1",
+    "gulp-watch": "^4.2.4"
+  },
+  "dependencies": {
+    "browserify": "^10.2.4",
+    "connect": "^3.4.0",
+    "lodash": "^3.10.0",
+    "open": "0.0.5",
+    "serve-static": "^1.10.0",
+    "string-color": "^0.8.0",
+    "traceur": "0.0.90"
+  }
+}
