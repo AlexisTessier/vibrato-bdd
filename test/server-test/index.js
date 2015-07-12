@@ -1,3 +1,8 @@
 'use strict';
 
-require('../test-suite');
+try{
+	require('../test-suite')();
+}
+catch (e){
+	throw new Error("Server error : "+e.message);
+}

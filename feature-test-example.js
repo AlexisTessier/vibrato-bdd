@@ -1,6 +1,6 @@
 'use strict';
 
-var test = describe = require('vibrato-bdd')('my-project');
+require('vibrato-bdd')('my-project').
 
 describe.feature('VibratoObject Pool')
 	
@@ -14,7 +14,7 @@ describe.feature('VibratoObject Pool')
 		.given('I got a VibratoObject')
 
 			(function step_definition(next) {
-				var objectToAdd = new VibratoObject();
+				var objectToAdd = new this.VibratoObject();
 
 				next(objectToAdd);
 			})

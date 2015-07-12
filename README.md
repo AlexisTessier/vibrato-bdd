@@ -118,18 +118,55 @@ How to use
 Reference
 ---------
 
-Vibrato BDD is inspired by <a href="https://cucumber.io" target="_blank">Cucumber</a> and the <a href="http://dannorth.net/introducing-bdd/" target="_blank">Gherkin syntax</a>.
+Vibrato BDD is inspired by <a href="https://cucumber.io" target="_blank">Cucumber</a> and the <a href="https://cucumber.io/docs/reference#gherkin" target="_blank">Gherkin syntax</a>.
 
 Read that page before all :
 
-<a href="https://cucumber.io/docs/reference#gherkin" target="_blank">Great explanation of Gherkin syntax</a>
+<a href="http://dannorth.net/introducing-bdd/" target="_blank">Introducing BDD</a>
 
 Documentation
 -------------
 
-resources autonaming 
+####VibratoBDD class
+You can access the class and instantiate a custom VibratoBDD object like this :
+```javascript
+var VibratoBDD = require('vibrato-bdd').class;
+
+var bdd = new VibratoBDD({identifier : 'my-instance-of-vibrato-bdd'});
+```
+
+####require('vibrato-bdd')
+returns a function taking a identifier string as single parameter. That function return an instance of VibratoBDD with the identifier, and save it so you can access later in other modules. If an instance with the identifier is yet saved, the function return it.
+
+####VibratoBDD methods and properties
+
+* **describe**
+
+	use to start the chain for feature description. This object contains a single function named feature.
+
+* **addResource**(***resourceName***, ***resource***)
+
+	save ***resource*** and set them as a property of your step definitions. Note if you just indicate the resource as a single parameter, the ***resourceName*** is setted by default with the constructor/class name of your resource (if possible).
+
+* **excludeTest**(***testToExclude***)
+
+	***testToExclude*** must be string or an array of string. All the features test contained in the file or directory targeted by the path ***testToExclude*** will not be executed. The path is relative to the "test-suite" directory
+
+	```javascript
+	/* my-project/test/index.js */
+
+	require('vibrato-bdd')('my-project-test-identifier')
+
+	.excludeTest('some-group-of-test/an-object-features')
+	//all the test in "my-project/test/test-suite/some-group-of-test/an-object-features will be ignored
+	```
+
+* **runTestSuiteFrom**(***testDirectoryPath***)
+	
+	this method launch all the javascript files in the "test-suite" directory (unless they were excluded), then run the test.
+
+
 asynchronous test with next
-test exclude 
 undefined step 
 multiple scenario 
 and, but 

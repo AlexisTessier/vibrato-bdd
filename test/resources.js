@@ -1,7 +1,7 @@
 'use strict';
 
-var ressources = {
+var resources = {
 	VibratoBDD : require('../index')
 };
 
-module.exports = ressources;
+module.exports = resources;

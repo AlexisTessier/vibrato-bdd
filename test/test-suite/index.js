@@ -1,6 +1,7 @@
 'use strict';
 
 function testSuite() {
-	require('./bdd-test')(require('../ressources'));
+	require('./bdd-test')(require('../resources'));
 };
-testSuite();
+
+module.exports = testSuite;

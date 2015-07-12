@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>vibrato-object browser test</title>
+    <style>
+    	body, html{
+    		margin: 0;
+    		padding: 0;
+    	}
+
+    	#error-list{
+    		margin: 25px;
+    	}
+
+    	.error{
+    		margin-bottom: 12px;
+    		color : red;
+    	}
+    </style>
+  </head>
+  <body>
+  	<div id="error-list"></div>
+
+  	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	  var socket = io();
+	</script>
+  	<script type="text/javascript" src="./browser-test-bundle.js"></script>
+  </body>
+</html>
