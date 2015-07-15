@@ -7,6 +7,8 @@ var serveStatic = require('serve-static');
 var open = require('open');
 var stringColor = require('string-color');
 
+var _ = require('lodash');
+
 var server = {};
 
 var socketIO = require('socket.io');
@@ -61,7 +63,11 @@ server.launch = function launch (port) {
 
 	log.success('Server for browser test ready at url : '+finalUrl);
 
+	console.log(process.platform);
+
 	open(finalUrl);
+
+	log.success('Browser opened at url : '+finalUrl);
 };
 
 module.exports = server;
