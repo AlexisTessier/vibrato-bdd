@@ -163,9 +163,9 @@ returns a function taking a identifier string as single parameter. That function
 	//all the tests in "my-project/test/test-suite/some-group-of-test/an-object-features" will be ignored
 	```
 
-* **runTestSuiteFrom**(***testDirectoryPath***)
+* **runTestSuiteFrom**(***testDirectoryPath*** [, ***tagList***])
 	
-	this method launch all the javascript files in the "test-suite" directory (unless they were excluded), then run the test.
+	This method launch all the javascript files in the "test-suite" directory (unless they were excluded), then run the test. If ***tagList*** is a string, only the scenarios with a related tag matching one of those in tagList will be launched.
 
 ####How to describe a feature
 
@@ -239,9 +239,9 @@ require('vibrato-bdd')('my-project-test-identifier')
 	Start to describe a scenario and returns an object with the given function as property
 	You can have multiple scenario for one feature. A scenario must have at least one "given" clause, one "when" clause and one "then" clause (in this order).
 	
-* **given**(***clauseNamme***)
-* **when**(***clauseNamme***)
-* **then**(***clauseNamme***)
+* **given**(***clauseName***)
+* **when**(***clauseName***)
+* **then**(***clauseName***)
 
 	Start to describe a given, a when or a then clause.
 	
@@ -385,7 +385,41 @@ In addition to the examples function, you have three others ways to set datas in
 	//.................................
 	```
 
-tag  
-hooks  
-generate docs  
-in browser
+* **tag**(***tagNameList***)
+	
+	Tag allow you to group scenarios. You can set one or many tags on features, scenario or examples (one line or all).
+
+	```javascript
+	require('vibrato-bdd')('my-project-identifier')
+
+	.describe.feature("Feature name").tag('TagOne TagTwo') //tag a feature
+
+		("feature description")
+
+		.scenario("Scenario name").tag('TagThree') //tag a scenario
+
+			.given("...")
+			.when("...")
+			.then("...")
+
+			.examples.tag('...') //tag all these examples
+				('fieldOne', 'fieldTwo')
+				/*--------------------*/
+				("...",       "..."    ).tag('poney')//tag this single example
+				("...",       "..."    ).tag('dog')
+				("...",       "..."    ).tag('cat')
+	```
+
+	Then, you can choose to run this scenario just for the tag "poney" or "cat" for example, in your test/index.js file :
+
+	```javascript
+	require('vibrato-bdd')('my-project-identifier')
+
+	.runTestSuiteFrom(__dirname, 'poney cat');
+	```
+
+	or another one from the cli, when using the command "npm test", with the --vibrato-tag (-vt) option :
+
+		node test -vt poney dog
+
+#####In Browser testing
