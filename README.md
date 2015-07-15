@@ -3,10 +3,14 @@ Vibrato BDD
 
 Work in progress...
 
+The module has not been written yet.
+
+I use a README as a guideline to write my specs.
+
 About
 -----
 
-A minimalist Behaviour Driven Development tool to test code both on server and on browser. You can write your specifications and tests, directly in javascript using a fluent API, based on Gherkin syntax.
+A minimalist Behaviour Driven Development tool to test code both on server and on browser. You can write your specifications and tests directly in javascript using a fluent API, based on Gherkin syntax.
 
 Why use Vibrato BDD and not some tools like Cucumber ?
 -----------------------------------------------------
@@ -32,17 +36,17 @@ How to use
 	```javascript
 	/* my-project/test/test-suite/my-feature-test.js */
 
-	.describe.feature('Deep equal function')
-		
-		('In order to know if two objects are identical')
-		('As a developer')
-		('I Want to deeply compare these two ojects')
+	.describe.feature("Deep equal function")(
+		"In order to know if two objects are identical",
+		"As a developer",
+		"I Want to deeply compare these two ojects"
+	)
 
-	.scenario('Comparing two identical objects')
+	.scenario("Comparing two identical objects")
 
 		.given("I've got two objects which are the sames")
-		.when('I use the deepEqual function')
-		.then('it returns a true value')
+		.when("I use the deepEqual function")
+		.then("it returns a true value")
 	```
 
 3.	add a file index.js in the "test" directory, to **initialize your resources** and the tests you want to run
@@ -71,17 +75,15 @@ How to use
 	//add this line to import your vibrato-bdd instance
 	require('vibrato-bdd')('my-project-test-identifier')
 
-	//note how the fluent chaining syntax allows you to write human readable test
+	.describe.feature("Deep equal function")(
+		"In order to know if two objects are identical",
+		"As a developer",
+		"I Want to deeply compare these two ojects"
+	)
 
-	.describe.feature('Deep equal function')
-		
-		('In order to know if two objects are identical')
-		('As a developer')
-		('I Want to deeply compare these two ojects')
+	.scenario("Comparing two identical objects")
 
-	.scenario('Comparing two identical objects')
-
-		.given('I got two objects which are the sames')
+		.given("I got two objects which are the sames")
 
 			//write your step definition directly here
 			(function given_step_definition(next) {
@@ -92,7 +94,7 @@ How to use
 				//you can pass value througt the steps with the next callback
 			})	
 
-		.when('I use the deepEqual function')
+		.when("I use the deepEqual function")
 
 			(function when_step_definition(objectOne, objectTwo, next) {
 				var resultOfComparison = this.deepEqual(objectOne, objectTwo)
@@ -101,7 +103,7 @@ How to use
 				next(resultOfComparison);
 			})	
 
-		.then('it returns a true value')
+		.then("it returns a true value")
 
 			(function when_step_definition(result) {
 				
@@ -122,7 +124,7 @@ Read that page before all :
 
 <a href="http://dannorth.net/introducing-bdd/" target="_blank">Introducing BDD</a>
 
-Vibrato BDD is inspired by <a href="https://cucumber.io" target="_blank">Cucumber</a> and the <a href="https://cucumber.io/docs/reference#gherkin" target="_blank">Gherkin syntax</a>. If you don't know much about Behaviour Driven Development, these links should help you.
+Vibrato BDD is inspired by <a href="https://cucumber.io" target="_blank">Cucumber</a> and mostly the <a href="https://cucumber.io/docs/reference#gherkin" target="_blank">Gherkin syntax</a>. If you don't know much about Behaviour Driven Development, these links should help you.
 
 Documentation
 -------------
@@ -157,8 +159,8 @@ returns a function taking a identifier string as single parameter. That function
 
 	require('vibrato-bdd')('my-project-test-identifier')
 
-	.excludeTest('some-group-of-test/an-object-features')
-	//all the test in "my-project/test/test-suite/some-group-of-test/an-object-features will be ignored
+	.excludeTest("some-group-of-test/an-object-features")
+	//all the tests in "my-project/test/test-suite/some-group-of-test/an-object-features" will be ignored
 	```
 
 * **runTestSuiteFrom**(***testDirectoryPath***)
@@ -171,54 +173,58 @@ returns a function taking a identifier string as single parameter. That function
 //require the VibratoBDD instance
 require('vibrato-bdd')('my-project-test-identifier')
 
-.describe.feature('Feature name')
-	//returns a function to set a line of text describing the feature
+.describe.feature("Feature name")(
+	//feature returns a function to set lines of text describing the feature
 	//You can set many lines in a row
 	//Even if you just need at least one line to describe your feature,
 	//it can be a good thing to use the pattern : In order, As, I want
 
-	('First line of feature description')
-	('Second line of feature description')
-	//the function returned to set the next line 
-	//has two functions as properties : background and scenario
+	"First line of feature description",
+	"Second line of feature description"
+	)
+	//the returned object has two functions as properties
+	//background and scenario
 
-	.background('Common background for the feature')
+	.background("Common background for the feature")
 		
-		.given('a given clause')
+		.given("a given clause")
 		//return a function to set the step definition
 
-			//to set the step definition, you must pass a function named "given_step_definition" as single argument
+			//to set the step definition, you must pass a function
+			//named "given_step_definition" as single argument
 
 			(function given_step_definition(next){
-				//in step definition, you have access to next function which call the next step definition
-				//and in the this, you have access to your resources
+				//in step definition, you have access to next function
+				//next() call the following step definition
 
 				next();
 			})
 
-		.and('an other given clause')
-			//if one of step definition is not setted, then the test will not pass
+		.and("an other given clause")
+			//if one of step definition is not setted,
+			//then the test will not pass
 
-	.scenario('A first scenario')
+	.scenario("A first scenario")
 
-		.given('a given clause')//start the step definition
+		.given("a given clause")//start the step definition
 			(function given_step_definition(next){
 				next();
 			})
 
 
-		.but('an other given clause')
+		.but("an other given clause")
 
-		.when('a when clause')
+		.when("a when clause")
 			(function when_step_definition(next){
 				
 				someAsynchronousFunction(next);
-				//you can pass next as a callback to run some asynchronous test
+				//you can pass next as a callback
+				//to run some asynchronous test
 			})
 
-		.then('a then clause')
+		.then("a then clause")
 
-	.scenario('start describe a other scenario')
+	.scenario("start describe a other scenario")
 
 	//................................................
 
@@ -226,59 +232,160 @@ require('vibrato-bdd')('my-project-test-identifier')
 ```
 * **background**(***BackgroundName***)
 
-	Start to describe a bakground and returns an object with the given function as property
-	A background allow you to defnie common given clauses to all the scenario of you feature. A background must contains at least one given clause.
+	Start to describe a bakground and returns an object with the given function as property. A background allow you to define common given clauses for all the scenario of you feature. A background must contains at least one given clause.
 
 * **scenario**(***ScenarioName***)
 
 	Start to describe a scenario and returns an object with the given function as property
-	You can have multiple scenario for one feature. A scenario must have at least one given clause, one when clause and on than clause.
+	You can have multiple scenario for one feature. A scenario must have at least one "given" clause, one "when" clause and one "then" clause (in this order).
 	
 * **given**(***clauseNamme***)
 * **when**(***clauseNamme***)
 * **then**(***clauseNamme***)
 
-	Start to describe a given, when or then clause.
+	Start to describe a given, a when or a then clause.
+	
 	Returns a function to set the step definition.
 	You also can use the functions and or but to add some clauses.
-	Note that if a step defnition is missing, the script will work, but the test will not pass.
+	
+	Note that if a step defnition is missing, the script will work, but the test will not pass. That allow you to write first your specs without implementing the tests.
+	
+	After a then, you can start a new scenario...
 
-* **Outline examples
-	at the end of a scenario you can use the functions examples to run the same test with multiples values
+#####Outline examples
+
+At the end of a scenario you can use the functions examples to run the same test with multiples values
+
+* **examples**(***firstVarName***, ***[othersVarName...]***)
+
+	Set the variables names accessibles in the description and returns a function to set values of each variable for one example.
 
 	```javascript
 	//.................................
 
-	.scenario('counting letters in a word')
-		.given('a <word : string>')
-			(function given_step_definition(word, next){
-				next(word);
+	.scenario("counting letters in a word")
+		.given("a <list of ignored letters> i should ignore")
+			(function given_step_definition(listOfIgnoredLetters, next){
+
+				var excludedLetters = listOfIgnoredLetters.split('');
+
+				next(excludedLetters);
 			})
-		.when('I count the number of letters in it, without counting <excluded letters : string>')
-			(function when_step_definition(word, excludedLetters, next){
+
+		.when("I count the number of letters in a <word>")
+			(function when_step_definition(excludedLetters, word, next){
 
 				var letterCount = countLetters(word, excludedLetters);
+
 				next(letterCount);
 			})
-		.then('I get <number of letters>')
+		.then("I get <number of letters>")
 
 			(function then_step_definition(letterCount, numberOfLetters){
+
 				assert.strictEqual(letterCount, numberOfletters);
 			})
+
 		.examples
-			('word', 'excluded letters', 'number of letters')
-			('trivial85', '85')
+			('list of ignored letters', 'word',      'number of letters')
+			/*---------------------------------------------------------*/
+			("aeiouy",                  "consonant",          6         )//first example
+			("bcdfghjklmnpqrstvwxz",    "vowel",              2         )//second example
 	```
-1.	You set the variables names you want in the clause between "<" and ">" (optionnaly you can indicate a valid var type after ":")
-2.	Get them
-3.	
 
-var type 
-data tables 
-tag 
-hooks
-generate docs
 
+1.	You set the variables names you want in the clause between "<" and ">"
+2.	Set them using the examples function. This function take as parameters the list of variable name and returns a function to set a example. You can set much example you want.
+3.	For each example, the variables present in the step description will be passed before the next callback. They are passed in there order of apparence in the description. Note that if you pass parameters to the next callback, they will be passed before the examples variables in the following step definition.
+
+#####Data as step arguments
+
+In addition to the examples function, you have three others ways to set datas in your step definitions.
+
+* **Directly in the given, when and then clauses**
+	
+	```javascript
+	//.................................
+
+	.given("I am <age : 52> years old")
+		
+		(function given_step_definition(age, next){
+			var user = new User({age : age});
+
+			next(user);
+		})
+
+	.but("My name is <name : Peter Pan>")
+
+		(function given_step_definition(user, name, next){
+			user.name = name;
+			
+			next(user);
+		})
+
+	.when("I'am going to the Neverland")
+	.then("I'am still a kid")
+	```
+
+	It works just like examples, but you have to set the value after a colon. Note that in this example, age will be automically setted as a number.
+
+* **text**
+
+	Eventually you could want to specify a larger piece of text. In this case you can use the function returned by given(), when(), then(), and() or but() to set lines of the text. This text will be passed just before the next callback in the step definition.
+
+	It's the equivalent of Gherkin Syntax's Docs String. If you use es6, a template string is probably better way to achieve multilines strings.
+
+	```javascript
+	//.................................
+
+	.given("A article with the following heading :")(
+		"Oh really, now i have to find an example for this fictional heading...",
+		"I've got seriously no fucking idea here right now...",
+		"One day, i wanna go to swimming with pandas !!!",
+		"Urf...",
+		"Sorry, it's the only thought that came to me."
+	)
+
+		(function given_step_definition(heading, next){
+			//heading is the concatenation of all the lines setted above
+			next();
+		})
+	//.................................
+	```
+
+* **table**
+
+	If you want to specify a larger piece of data you can use the function returned by given(), when(), then(), and() or but() to set them. It works like the examples function. First function call is to set the field name, them each line represents an entry. The datas will be passed just before the next callback in the step definition as an Array of objects.
+
+	Note that if you don't indicate any entry, the fields names will be treated as lines of a text.
+
+	It's the equivalent of Gherkin Syntax's Data Tables.
+
+	```javascript
+	//.................................
+
+	.given("The following animals exist :")
+		('name',    'origin', 'cuteness level')
+		/*-----------------------------------*/
+		("griffin", "Egypt",          0       )
+		("unicorn", "rainbows",       4       )
+		("cat",     "cat trees",     9999     )
+
+
+		(function given_step_definition(animals, next){
+			var world = new this.World();
+
+			for(var i=0, imax=animals.length, animal; i<imax; i++){
+				animal=animals[i];
+				world.animals[animal.name] = animal;
+			}
+		
+			next(world);
+		})
+	//.................................
+	```
+
+tag  
+hooks  
+generate docs  
 in browser
-
-asynchronous test with next
