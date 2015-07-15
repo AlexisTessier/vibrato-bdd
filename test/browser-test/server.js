@@ -7,6 +7,8 @@ var serveStatic = require('serve-static');
 var open = require('open');
 var stringColor = require('string-color');
 
+var _ = require('lodash');
+
 var server = {};
 
 var socketIO = require('socket.io');
