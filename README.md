@@ -10,7 +10,7 @@ I use a README as a guideline to write my specs.
 About
 -----
 
-A minimalist Behaviour Driven Development tool to test code both on server and on browser. You can write your specifications and tests directly in javascript using a fluent API, based on Gherkin syntax.
+A minimalist Behaviour Driven Development tool. You can write your specifications and tests directly in javascript using a fluent API, based on Gherkin syntax.
 
 Why use Vibrato BDD and not some tools like Cucumber ?
 -----------------------------------------------------
@@ -387,7 +387,7 @@ In addition to the examples function, you have three others ways to set datas in
 
 * **tag**(***tagNameList***)
 	
-	Tag allow you to group scenarios. You can set one or many tags on features, scenario or examples (one line or all).
+	Tags allow you to group scenarios. You can set one or many tags on features, scenario or examples (one line or all).
 
 	```javascript
 	require('vibrato-bdd')('my-project-identifier')
@@ -423,3 +423,4 @@ In addition to the examples function, you have three others ways to set datas in
 		node test -vt poney dog
 
 #####In Browser testing
+	If you wanna run your test-suite both on server and on browser, you can
