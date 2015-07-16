@@ -25,18 +25,17 @@ var log = {
 
 var webdriver = require('selenium-webdriver');
 
-var driver = new webdriver.Builder()
-    .usingServer()
-    .withCapabilities({
-    	'browserName': 'firefox',
-    	'tunnel-identifier' : process.env['TRAVIS_JOB_NUMBER']
-    })
-    .build();
-
 server.launch = function launch (port) {
 	var app = connect(),
 		usedPort = typeof port === "number" ? port : 3000,
 		finalUrl = 'http://localhost:'+usedPort;
+
+	var driver = new webdriver.Builder()
+    .usingServer()
+    .withCapabilities({
+    	'browserName': 'firefox'
+    })
+    .build();
 
 	app.use(serveStatic(__dirname + '/public/'));
 
