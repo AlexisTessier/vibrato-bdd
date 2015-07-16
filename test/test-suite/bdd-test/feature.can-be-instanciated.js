@@ -27,7 +27,7 @@ var feature = function canBeInstanciated(name, resources) {
 
 	scenario = "Using a the class without a valid identifier (a string)";
 
-	//assert.strictEqual(typeof scenario, typeof 5, trace('test failed'));
+	assert.strictEqual(typeof scenario, typeof 5, trace('test failed'));
 };
 
 function trace (message) {
