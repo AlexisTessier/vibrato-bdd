@@ -28,14 +28,25 @@ var webdriver = require('selenium-webdriver');
 server.launch = function launch (port) {
 	var app = connect(),
 		usedPort = typeof port === "number" ? port : 3000,
-		finalUrl = 'http://localhost:'+usedPort;
+		finalUrl = 'http://localhost:'+usedPort,
+		driver;
 
-	var driver = new webdriver.Builder()
-    .usingServer()
-    .withCapabilities({
-    	'browserName': 'firefox'
-    })
-    .build();
+	if (process.env.SAUCE_USERNAME != undefined) {
+      driver = new webdriver.Builder()
+      .usingServer('http://'+ process.env.SAUCE_USERNAME+':'+process.env.SAUCE_ACCESS_KEY+'@ondemand.saucelabs.com:80/wd/hub')
+      .withCapabilities({
+        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+        build: process.env.TRAVIS_BUILD_NUMBER,
+        username: process.env.SAUCE_USERNAME,
+        accessKey: process.env.SAUCE_ACCESS_KEY,
+        browserName: "firefox"
+      }).build();
+    } else {
+      driver = new webdriver.Builder()
+      .withCapabilities({
+        browserName: "firefox"
+      }).build();
+    }
 
 	app.use(serveStatic(__dirname + '/public/'));
 
