@@ -2,13 +2,14 @@ language: node_js
 node_js:
 - '0.11'
 - '0.10'
+addons:
+  sauce_connect: true
 before_install:
-  - npm install -g gulp
-before_script:
-  - "sh -e /etc/init.d/xvfb start"
-  - "export DISPLAY=99:0"
-  - "wget http://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar"
-  - "java -jar selenium-server-standalone-2.43.1.jar > /dev/null &"
+- npm install -g gulp
 script:
-  - gulp coverage
-  - npm test
+- gulp coverage
+- npm test
+env:
+  global:
+  - secure: Ky/YfbM3vS8fb1hrt2NTFhJDi3u0UGvtHFlhRfeMZCMrCALbPJzifvhHv/NlI82PYJT3RsaRj+XtEW0ENr0INs+v8j442eT6DxiMs5mslhhL9XESXfX0STAopibp9ncAqTTLzyyPjtWfr+GzlHOxN+ZVlEHt7IH1oVTM8Z0nf7PyXr9LWyFCWhEv93mtu/iWIpGC3omhLbhtkhP2jOPMVmu26zr0PN0EtvqyhXkWM2Is1VC69z+PaduuJW9sbGOdTrmVF4TSZm1SjtbkCgcG4JHd71IQUWqbmMN/c58JUwuV9W4Ds487IGK05hU6R/wqJvggCpTSL8kKasQqI1oOCLXJVURI9PfCu0yTT/2BJ55mgcZQXIHBPLzj17tU+t1bR7S3jVaE2H5fRBVn/x7BoLrAKNpLSDutLZuSSgeFnLbm/rwWuy9PTii/DbB5f4J/NYDF+0G4rdM3dkJ3JJvC6iqOGqzbc++Pw5SVpC2eu7zBeg7MxVf237SbCrsLpuW/ZUJJjI+u278LOAm1wiiTN5w12twkIOjkx+bCBjLaYC1hs1eo+fN8hzRj3QIVVQ43ZxUwhKD7elZCphZhHgIzCWDkrWgvdhOtHQ/fEnHIfZNR8nx7e/Tut3P2nmjxyJsmEtZLJcAjTXcbEZFYJjkGdSbTaoJpaOsCKVeHNg7jaGA=
+  - secure: gowdwu2QG5Mx8sYzomO6rFzlt9fy60ujSawQNfC5EEdpODt19Yl8OvHmVSsV/jIWLoZtVjG064d0dz+1IbZ4qRmN32c++ssB8McAYb/p5Qs1DSAcQFXnGwQQLmc/GntVzjut2eWMYqvatNOgtzPDXWSIpSafjv/WvwwB65H1ZsQ4158ltRyF2EggAau27//cw/cN09bwXzdF9C2CSywVcgq8R2zm85P9K+XCULXx7ujX/UxVVAXmN5+UDFAQPqOoO5WSqtuTR7NpO2owOt0uJX7Jg7LGgE8cDtl1PbKXEMnXiOgEqTAYXN1GMwZzZ+eGzcYeLTFAveggbdksfNvYPjIvzcEuNMbd3r4Ng/VXc+x5h+DKXWPK0feyr4qUzWMvqHbMXEtl35gincl04wBwdHXHPMxFT3IRaDrm4rn5aaUagjfpUOsSjlZl+ryQX8YNRdcMbUcfuRDzCEuvcoJOIH/sr8EwDiQwbmQMd7l5D+huBYNUeO4bpF41yApiAGXKfojgGl/n3Dtk/bIOumicExdHlGBgodqoce1njYXP1lRDV/xdcAFWLaqyeJUWj0hq6p/TyRK3K5rSUnPUdV1P1oRBx/1fY7AXG6oC2mnxpovrMm0eRgQ+2Huh9SfyQ0Zo5LOYECbLhhnbYlpChqQ3kk31/7uqKzHt19xBxREnY7E=

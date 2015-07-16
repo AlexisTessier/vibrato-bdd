@@ -70,6 +70,7 @@ server.launch = function launch (port) {
 	});
 
 	httpServer.listen(usedPort);
+	console.log(httpServer)
 
 	log.success('Server for browser test ready at url : '+finalUrl);
 

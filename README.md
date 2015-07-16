@@ -418,7 +418,7 @@ In addition to the examples function, you have three others ways to set datas in
 	.runTestSuiteFrom(__dirname, 'poney cat');
 	```
 
-	or another one from the cli, when using the command "npm test", with the --vibrato-tag (-vt) option :
+	or another one from the cli, when using the command "node test", with the --vibrato-tag (-vt) option :
 
 		node test -vt poney dog
 
