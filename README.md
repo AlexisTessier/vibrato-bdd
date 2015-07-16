@@ -1,3 +1,6 @@
+[![Coverage Status](https://coveralls.io/repos/AlexisTessier/vibrato-bdd/badge.svg?branch=master&service=github)](https://coveralls.io/github/AlexisTessier/vibrato-bdd?branch=master)
+[![Build Status](https://travis-ci.org/AlexisTessier/vibrato-bdd.svg?branch=master)](https://travis-ci.org/AlexisTessier/vibrato-bdd)
+
 Vibrato BDD
 ===========
 
