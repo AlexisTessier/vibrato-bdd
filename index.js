@@ -1,7 +1,5 @@
 'use strict';
 
-require('traceur/bin/traceur-runtime');
-
-var vibratoBDD = require('./build/index').default;
+var vibratoBDD = require('./lib/index');
 
 module.exports = vibratoBDD;

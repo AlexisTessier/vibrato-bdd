@@ -1,7 +1,7 @@
 'use strict';
 
 var resources = {
-	VibratoBDD : require('../index')
+	VibratoBDD : require('../lib-cov/index')
 };
 
 module.exports = resources;

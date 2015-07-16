@@ -21,11 +21,14 @@
   "author": "Alexis Tessier <alexis.tessier@designdo.fr>",
   "license": "MIT",
   "devDependencies": {
+    "coveralls": "^2.11.2",
     "gulp": "^3.9.0",
     "gulp-batch": "^1.0.5",
+    "gulp-instrument": "^0.1.0",
     "gulp-plumber": "^1.0.1",
     "gulp-traceur": "^0.17.1",
-    "gulp-watch": "^4.2.4"
+    "gulp-watch": "^4.2.4",
+    "jscoverage": "^0.5.9"
   },
   "dependencies": {
     "browserify": "^10.2.4",
