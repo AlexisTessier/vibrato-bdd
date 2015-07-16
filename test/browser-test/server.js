@@ -23,12 +23,14 @@ var log = {
 	}
 };
 
-var webdriver = require('selenium-webdriver'),
-    By = require('selenium-webdriver').By,
-    until = require('selenium-webdriver').until;
+var webdriver = require('selenium-webdriver');
 
 var driver = new webdriver.Builder()
-    .forBrowser('firefox')
+    .usingServer()
+    .withCapabilities({
+    	'browserName': 'firefox',
+    	'tunnel-identifier' : process.env['TRAVIS_JOB_NUMBER']
+    })
     .build();
 
 server.launch = function launch (port) {
@@ -70,7 +72,6 @@ server.launch = function launch (port) {
 	});
 
 	httpServer.listen(usedPort);
-	console.log(httpServer)
 
 	log.success('Server for browser test ready at url : '+finalUrl);
 
