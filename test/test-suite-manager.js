@@ -15,7 +15,7 @@ var testSuiteManager = {
 		scenarioDoneList[name] = true;
 	},
 
-	exitProcessIfAllTestAreDone : function () {
+	exitProcessIfAllTestsAreDone : function () {
 		setInterval(function () {
 			if(_.every(scenarioDoneList, function(scenarioDone) {
 				return scenarioDone;

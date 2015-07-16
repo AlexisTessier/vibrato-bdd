@@ -57,7 +57,7 @@ server.launch = function launch (port) {
 			testFinished = true;
 			log.success('Browser test finished at url : '+finalUrl);
 			driver.quit();
-			testSuite.exitProcessIfAllTestAreDone();
+			testSuite.exitProcessIfAllTestsAreDone();
 		});
 
 		socket.on('issue', function (message) {
