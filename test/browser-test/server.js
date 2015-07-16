@@ -4,7 +4,6 @@ var http = require('http');
 
 var connect = require('connect');
 var serveStatic = require('serve-static');
-var open = require('open');
 var stringColor = require('string-color');
 
 var _ = require('lodash');
@@ -12,6 +11,8 @@ var _ = require('lodash');
 var server = {};
 
 var socketIO = require('socket.io');
+
+var testSuite = require('../test-suite-manager');
 
 var log = {
 	success : function success (message) {
@@ -21,6 +22,14 @@ var log = {
 		console.log(message.color('red'));
 	}
 };
+
+var webdriver = require('selenium-webdriver'),
+    By = require('selenium-webdriver').By,
+    until = require('selenium-webdriver').until;
+
+var driver = new webdriver.Builder()
+    .forBrowser('firefox')
+    .build();
 
 server.launch = function launch (port) {
 	var app = connect(),
@@ -47,7 +56,8 @@ server.launch = function launch (port) {
 		socket.on('finished', function () {
 			testFinished = true;
 			log.success('Browser test finished at url : '+finalUrl);
-			process.exit();
+			driver.quit();
+			testSuite.exitProcessIfAllTestAreDone();
 		});
 
 		socket.on('issue', function (message) {
@@ -63,9 +73,7 @@ server.launch = function launch (port) {
 
 	log.success('Server for browser test ready at url : '+finalUrl);
 
-	console.log(process.platform);
-
-	open(finalUrl);
+	driver.get(finalUrl);
 
 	log.success('Browser opened at url : '+finalUrl);
 };

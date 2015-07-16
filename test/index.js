@@ -2,4 +2,4 @@
 
 require('./server-test');
 
-//require('./browser-test');
+require('./browser-test');

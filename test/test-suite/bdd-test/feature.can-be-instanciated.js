@@ -5,6 +5,8 @@ var assert = require('assert');
 var moduleName = "", scenario = "feature background";
 
 var feature = function canBeInstanciated(name, resources) {
+	var testSuite = resources.testSuite;
+
 	moduleName = name;
 
 	/*
@@ -13,21 +15,32 @@ var feature = function canBeInstanciated(name, resources) {
 	I Want to create a instance of VibratoBDD
 	*/
 
-	scenario = "Using the factory with a valid identifier (a string)";
 
-		//given 
+	scenario = testSuite.addScenario("Using the factory with a valid identifier (a string)");
 
-	scenario = "Using the factory without a valid identifier (a string)";
+	testSuite.scenarioEnd(scenario); 
 
-	scenario = "Using the factory with a yet used identifier";
+	scenario = testSuite.addScenario("Using the factory without a valid identifier (a string)");
 
-	scenario = "Using the factory with an unused yet identifier";
+	testSuite.scenarioEnd(scenario); 
 
-	scenario = "Using a the class with a valid identifier (a string)";
+	scenario = testSuite.addScenario("Using the factory with a yet used identifier");
 
-	scenario = "Using a the class without a valid identifier (a string)";
+	testSuite.scenarioEnd(scenario); 
 
-	assert.strictEqual(typeof scenario, typeof 5, trace('test failed'));
+	scenario = testSuite.addScenario("Using the factory with an unused yet identifier");
+
+	testSuite.scenarioEnd(scenario); 
+
+	scenario = testSuite.addScenario("Using a the class with a valid identifier (a string)");
+
+	testSuite.scenarioEnd(scenario); 
+
+	scenario = testSuite.addScenario("Using a the class without a valid identifier (a string)");
+
+	testSuite.scenarioEnd(scenario); 
+
+	//assert.strictEqual(typeof scenario, typeof 5, trace('test failed'));
 };
 
 function trace (message) {
