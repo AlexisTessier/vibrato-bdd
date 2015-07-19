@@ -1,14 +1,14 @@
 {
   "name": "vibrato-bdd",
   "version": "0.0.1",
-  "description": "A behaviour driven development framework to test code both on server and on client",
+  "description": "A behaviour driven development framework to test code both on server and on browser",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/AlexisTessier/vibrato-bdd.git"
   },
   "scripts": {
-    "test": "node test/index.js --use-cov"
+    "test": "node test"
   },
   "keywords": [
     "vibrato",
@@ -25,16 +25,15 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-batch": "^1.0.5",
-    "gulp-instrument": "^0.1.0",
     "gulp-plumber": "^1.0.1",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-watch": "^4.2.4",
-    "jscoverage": "^0.5.9",
     "source-map-support": "^0.3.2"
   },
   "dependencies": {
     "babel-runtime": "^5.7.0",
     "browserify": "^10.2.4",
+    "chalk": "^1.1.0",
     "connect": "^3.4.0",
     "lodash": "^3.10.0",
     "selenium-webdriver": "^2.46.1",
