@@ -6,15 +6,17 @@ var moduleName = "", scenario = "feature background";
 
 var feature = function canBeInstanciated(name, resources) {
 	var testSuite = resources.testSuite;
-
 	moduleName = name;
+
+	var bdd = new resources.VibratoBDD();
+
+	bdd.testError();
 
 	/*
 	In order to use VibratoBDD
 	As a developper
 	I Want to create a instance of VibratoBDD
 	*/
-
 
 	scenario = testSuite.addScenario("Using the factory with a valid identifier (a string)");
 
@@ -38,7 +40,7 @@ var feature = function canBeInstanciated(name, resources) {
 
 	scenario = testSuite.addScenario("Using a the class without a valid identifier (a string)");
 
-	testSuite.scenarioEnd(scenario); 
+	testSuite.scenarioEnd(scenario);
 
 	//assert.strictEqual(typeof scenario, typeof 5, trace('test failed'));
 };

@@ -8,7 +8,7 @@
     "url": "https://github.com/AlexisTessier/vibrato-bdd.git"
   },
   "scripts": {
-    "test": "node test/index.js"
+    "test": "node test/index.js --use-cov"
   },
   "keywords": [
     "vibrato",
@@ -23,21 +23,23 @@
   "devDependencies": {
     "coveralls": "^2.11.2",
     "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
     "gulp-batch": "^1.0.5",
     "gulp-instrument": "^0.1.0",
     "gulp-plumber": "^1.0.1",
-    "gulp-traceur": "^0.17.1",
+    "gulp-sourcemaps": "^1.5.2",
     "gulp-watch": "^4.2.4",
-    "jscoverage": "^0.5.9"
+    "jscoverage": "^0.5.9",
+    "source-map-support": "^0.3.2"
   },
   "dependencies": {
+    "babel-runtime": "^5.7.0",
     "browserify": "^10.2.4",
     "connect": "^3.4.0",
     "lodash": "^3.10.0",
     "selenium-webdriver": "^2.46.1",
     "serve-static": "^1.10.0",
     "socket.io": "^1.3.5",
-    "string-color": "^0.8.0",
-    "traceur": "0.0.90"
+    "string-color": "^0.8.0"
   }
 }

@@ -21,7 +21,10 @@ var testSuiteManager = {
 				return scenarioDone;
 			})){
 				console.log("All tests done : process exit");
-				if (_.isObject(process)){
+				if(typeof window === "object"){
+					socket.emit('test-finished');
+				}
+				else if (typeof process === "object"){
 					if (_.isFunction(process.exit)) {
 						process.exit();
 					}

@@ -11,7 +11,17 @@ var context = {
 
 class VibratoBDD {
 	constructor(args) {
+		this.test = "hello";
+	}
 
+	testCall(){
+		console.log(this.test);
+	}
+
+	testError(){
+		if (typeof window === "object") {
+			this.arf = new Gender("jk");
+		}
 	}
 }
 

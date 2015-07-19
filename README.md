@@ -60,7 +60,7 @@ How to use
 	require('vibrato-bdd')('my-project-test-identifier')
 	//create an instance of vibrato-bdd with an identifier
 
-	.addResource('deepEqual', require('my-deep-equal-function'))
+	.setResource('deepEqual', require('my-deep-equal-function'))
 	//deepEqual will be accessible in the this object of your step definitions
 
 	.runTestSuiteFrom(__dirname);
@@ -108,9 +108,13 @@ How to use
 
 		.then("it returns a true value")
 
-			(function when_step_definition(result) {
+			(function when_step_definition(result, end) {
 				
 				assert.strictEqual(result, true);
+
+				end();
+				//same callback as next
+				//but named differently to mark the end of current scenario
 			})	
 	```
 
@@ -149,13 +153,13 @@ returns a function taking a identifier string as single parameter. That function
 
 	Use that property to start the chain for feature description. This object contains a single function named feature.
 
-* **addResource**(***resourceName***, ***resource***)
+* **setResource**(***resourceName***, ***resource***)
 
 	save ***resource*** and set them as a property of your step definitions. Note if you just indicate the resource as a single parameter, the ***resourceName*** is setted by default with the constructor/class name of your resource (if possible).
 
 * **excludeTest**(***testToExclude***)
 
-	***testToExclude*** must be string or an array of string. All the features test contained in the file or directory targeted by the path ***testToExclude*** will not be executed. The path is relative to the "test-suite" directory
+	***testToExclude*** must be a string or an array of string. All the features test contained in the file or directory targeted by the path ***testToExclude*** will not be executed. The path is relative to the "test-suite" directory
 
 	```javascript
 	/* my-project/test/index.js */
@@ -166,9 +170,21 @@ returns a function taking a identifier string as single parameter. That function
 	//all the tests in "my-project/test/test-suite/some-group-of-test/an-object-features" will be ignored
 	```
 
+* **excludeTag**(***tagListToExclude***)
+
+	***tagListToExclude*** must be a string. All the scenarios with a related tag matching one of those in ***tagListToExclude*** will not be executed.
+
+	```javascript
+	/* my-project/test/index.js */
+
+	require('vibrato-bdd')('my-project-test-identifier')
+
+	.excludeTag('tagOne tagTwo otherTag')
+	```
+
 * **runTestSuiteFrom**(***testDirectoryPath*** [, ***tagList***])
 	
-	This method launch all the javascript files in the "test-suite" directory (unless they were excluded), then run the test. If ***tagList*** is a string, only the scenarios with a related tag matching one of those in tagList will be launched.
+	This method launch all the javascript files in the "test-suite" directory (unless they were excluded), then run the test. If ***tagList*** is a string, only the scenarios with a related tag matching one of those in ***tagList*** will be launched (Unless they were previously excluded).
 
 ####How to describe a feature
 
@@ -358,7 +374,7 @@ In addition to the examples function, you have three others ways to set datas in
 
 * **table**
 
-	If you want to specify a larger piece of data you can use the function returned by given(), when(), then(), and() or but() to set them. It works like the examples function. First function call is to set the field name, them each line represents an entry. The datas will be passed just before the next callback in the step definition as an Array of objects.
+	If you want to specify a larger piece of data you can use the function returned by given(), when(), then(), and() or but() to set them. It works like the examples function. First function call is to set the fields names, them each line represents an entry. The datas will be passed just before the next callback in the step definition as an Array of objects.
 
 	Note that if you don't indicate any entry, the fields names will be treated as lines of a text.
 
@@ -426,3 +442,9 @@ In addition to the examples function, you have three others ways to set datas in
 		node test -vt poney dog
 
 #####In Browser testing
+
+#####Next steps
+	Feature change detect  
+	create and update test from .feature files  
+	create and update .feature files from test  
+	Maybe hooks
