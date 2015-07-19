@@ -10,8 +10,6 @@ var feature = function canBeInstanciated(name, resources) {
 
 	var bdd = new resources.VibratoBDD();
 
-	bdd.testError();
-
 	/*
 	In order to use VibratoBDD
 	As a developper
@@ -42,7 +40,9 @@ var feature = function canBeInstanciated(name, resources) {
 
 	testSuite.scenarioEnd(scenario);
 
-	//assert.strictEqual(typeof scenario, typeof 5, trace('test failed'));
+	if (testSuite.context.isBrowser) {
+		//assert.strictEqual(typeof scenario, typeof 5, trace('test failed'));
+	}
 };
 
 function trace (message) {

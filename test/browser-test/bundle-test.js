@@ -1,25 +1,17 @@
 'use strict';
 
 (function () {
-
 	var bundleTest = require('../test-suite');
-	var testSuiteManager = require('../test-suite-manager');
-
-	function closeWindow (delay) {
-		window.setTimeout(function () {
-			window.close();
-		}, (typeof delay === 'number' ? delay : 0));
-	}
+	var testSuite = require('../test-suite-manager');
 
 	document.addEventListener("DOMContentLoaded", function(event) { 
 		try{
-			bundleTest();
+			bundleTest('browser');
 		}
 		catch(e){
-			socket.emit('test-issue', e.message, e.stack);
+			testSuite.issue(e.message+'\n'+e.stack);
 		}
 
-		testSuiteManager.exitProcessIfAllTestsAreDone();
+		testSuite.exitProcessIfAllTestsAreDone();
 	});
-
 })();

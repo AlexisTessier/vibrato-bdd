@@ -1,7 +1,11 @@
 'use strict';
 
-function testSuite() {
-	require('./bdd-test')(require('../resources'));
+var resources = require('../resources');
+
+function testSuite(context) {
+	resources.testSuite.setContext(context);
+
+	require('./bdd-test')('VibratoBDD', resources);
 };
 
 module.exports = testSuite;

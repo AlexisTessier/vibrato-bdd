@@ -1,7 +1,7 @@
 'use strict';
 
-function featuresTest(resources) {
-	require('./feature.can-be-instanciated')('VibratoBDD', resources);
+function featuresTest(moduleName, resources) {
+	require('./feature.can-be-instanciated')(moduleName, resources);
 };
 
 module.exports = featuresTest;

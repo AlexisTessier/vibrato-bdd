@@ -4,7 +4,6 @@ var http = require('http');
 
 var connect = require('connect');
 var serveStatic = require('serve-static');
-var stringColor = require('string-color');
 
 var _ = require('lodash');
 
@@ -14,14 +13,7 @@ var socketIO = require('socket.io');
 
 var testSuite = require('../test-suite-manager');
 
-var log = {
-	success : function success (message) {
-		console.log(message.color('green'));
-	},
-	failure : function failure (message) {
-		console.log(message.color('red'));
-	}
-};
+var log = require('../log');
 
 var webdriver = require('selenium-webdriver');
 
@@ -68,12 +60,15 @@ server.launch = function launch (port) {
 		socket.on('test-finished', function () {
 			testFinished = true;
 			log.success('Browser test finished at url : '+finalUrl);
-			//driver.quit();
 			testSuite.exitProcessIfAllTestsAreDone();
 		});
 
-		socket.on('test-issue', function (errorMessage, errorStack) {
-			throw Error("Browser error : "+ errorMessage+"\n"+errorStack);
+		socket.on('test-issue', function (errorMessage) {
+			throw Error("Browser error : "+ errorMessage);
+		});
+
+		socket.on('test-notice', function (noticeMessage) {
+			log.notice("Browser notice : "+ noticeMessage);
 		});
 
 		socket.on('error', function (error) {
