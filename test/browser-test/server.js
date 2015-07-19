@@ -59,21 +59,21 @@ server.launch = function launch (port) {
 
 		var testFinished = false;
 
-	  	socket.on('disconnect', function(){
+	  	socket.on('test-disconnect', function(){
 	  		if (!testFinished) {
 	  			log.failure('Browser test interrupted at url : '+finalUrl);
 	  		}
 		});
 
-		socket.on('finished', function () {
+		socket.on('test-finished', function () {
 			testFinished = true;
 			log.success('Browser test finished at url : '+finalUrl);
 			driver.quit();
 			testSuite.exitProcessIfAllTestsAreDone();
 		});
 
-		socket.on('issue', function (message) {
-			throw new Error("Browser error : "+message);
+		socket.on('test-issue', function (errorMessage, errorStack) {
+			throw Error("Browser error : "+ errorMessage+"\n"+errorStack);
 		});
 
 		socket.on('error', function (error) {
@@ -87,7 +87,7 @@ server.launch = function launch (port) {
 
 	driver.get(finalUrl);
 
-	log.success('Browser opened at url : '+finalUrl);
+	log.success('Browser opening at url : '+finalUrl);
 };
 
 module.exports = server;

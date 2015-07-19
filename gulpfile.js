@@ -3,9 +3,10 @@
 var gulp = require('gulp');
 var watch = require('gulp-watch');
 var plumber = require('gulp-plumber');
-var traceur = require('gulp-traceur');
+var babel = require('gulp-babel');
 var batch = require('gulp-batch');
 var instrument  = require('gulp-instrument');
+var sourcemaps = require('gulp-sourcemaps');
 
 var watchTargetGlob = ["sources/*.js", "sources/*/*.js"];
 
@@ -16,21 +17,22 @@ gulp.task('coverage', function () {
     	.pipe(plumber())
         .pipe(instrument())
         .pipe(gulp.dest('lib-cov'));
-
-    gulp.src(['lib/build/**.js'])
-    	.pipe(plumber())
-        .pipe(instrument())
-        .pipe(gulp.dest('lib-cov/build'));
-})
-
-gulp.task('traceur', function () {
-	gulp.src(watchTargetGlob)
-		.pipe(plumber())
-		.pipe(traceur())
-		.pipe(gulp.dest('lib/build'))
 });
 
-gulp.task('build', ['traceur'], function () {
+gulp.task('babel', function (done) {
+	gulp.src(watchTargetGlob)
+		.pipe(plumber())
+		.pipe(sourcemaps.init())
+		.pipe(babel({ optional: ["runtime"] }))
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest('lib/'))
+
+		.on('end', function() {
+		    done();
+		});
+});
+
+gulp.task('build', ['babel'], function () {
 	gulp.start('coverage');
 });
 

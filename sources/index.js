@@ -11,7 +11,14 @@ var context = {
 
 class VibratoBDD {
 	constructor(args) {
+		this.test = "hello";
+	}
 
+	testCall(){
+		console.log(this.test);
+	}
+
+	testError(){
 	}
 }
 

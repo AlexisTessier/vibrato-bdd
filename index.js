@@ -1,5 +1,5 @@
 'use strict';
 
-var vibratoBDD = require('./lib/index');
+var vibratoBDD = require('./lib');
 
 module.exports = vibratoBDD;

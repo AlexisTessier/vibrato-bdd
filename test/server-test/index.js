@@ -1,8 +1,11 @@
 'use strict';
 
+require('source-map-support').install();
+
 try{
 	require('../test-suite')();
 }
 catch (e){
-	throw new Error("Server error : "+e.message);
+	e.message = "Server error : "+e.message;
+	throw e;
 }
