@@ -157,7 +157,9 @@ returns a function taking a identifier string as single parameter. That function
 
 * **setResource**(***resourceName***, ***resource***)
 
-	save ***resource*** and set them as a property of your step definitions. Note if you just indicate the resource as a single parameter, the ***resourceName*** is setted by default with the constructor/class name of your resource (if possible).
+	save ***resource*** and set it as a property of your step definitions. Note if you just indicate the resource as a single parameter, the ***resourceName*** is setted by default with the constructor/class name of your resource (if possible).
+
+	By default, one resource named context is already setted (see later).
 
 * **excludeTest**(***testToExclude***)
 
@@ -184,9 +186,57 @@ returns a function taking a identifier string as single parameter. That function
 	.excludeTag('tagOne tagTwo otherTag')
 	```
 
+* **useContext**(***contextName***)
+	
+	This method allows you to active a specific context to run the test suite. Admitting you have a file named "my-own-context-test.js" (you have to use the "-test" suffix) in your "test" directory, then automatically, "my-own-context" will be listed as a possible context when you run the test suite.
+
+	Then, in your "context" resource, your have an access to two methods for each possible context :
+
+	* **isMyOwnContext**()  
+		Return true if the context is activated
+
+	* **needMyOwnContext**(***callback***)  
+		Executes the callback function, but  if the context isn't activated, errors will be catched and ignored.
+
+	You can know if neither context is activated, using the context method :
+
+	* **no**()  
+		Return true if neither context is activated
+
+	See In Browser Testing for examples.
+
 * **runTestSuiteFrom**(***testDirectoryPath*** [, ***tagList***])
 	
 	This method launch all the javascript files in the "test-suite" directory (unless they were excluded), then run the test. If ***tagList*** is a string, only the scenarios with a related tag matching one of those in ***tagList*** will be launched (Unless they were previously excluded).
+
+* **TagList parameter**
+	
+	A tag list is a string containing the targeted tags, separated by spaces.  
+	In order to achieve a finest targeting, you can also use a combination of parenthesis and "&" character in place of space to indicate that multiples tags are required to run or exclude the related scenarios.
+
+	Spaces means "OR" and are less priority.
+
+	```javascript
+	/* my-project/test/index.js */
+
+	require('vibrato-bdd')('my-project-test-identifier')
+
+	.runTestSuiteFrom(__dirname, 'animal & bunny cat')
+	//run the scenario related to ("animal" and "bunny"), or ("cat")
+
+	.runTestSuiteFrom(__dirname, '(animal & bunny) cat')
+	//run the scenario related to ("animal" and "bunny"), or ("cat")
+
+	.runTestSuiteFrom(__dirname, 'animal & (bunny cat)')
+	//run the scenario related to ("animal" and "bunny"), or ("animal" and "cat")
+
+	.runTestSuiteFrom(__dirname, 'animal & bunny (painting & human & (animal & cat book & (dragon unicorn)))')
+	//run the scenario related to ("animal" and "bunny"),
+	//or ("painting" and "human" and "animal" and "cat"), 
+	//or ("painting" and "human" and "book" and "dragon"),
+	//or ("painting" and "human" and "book" and "unicorn")
+	//but i mean, avoid these complex filterings...
+	```
 
 ####How to describe a feature
 
@@ -253,7 +303,7 @@ require('vibrato-bdd')('my-project-test-identifier')
 ```
 * **background**(***BackgroundName***)
 
-	Start to describe a bakground and returns an object with the given function as property. A background allow you to define common given clauses for all the scenario of you feature. A background must contains at least one given clause.
+	Start to describe a bakground and returns an object with the given function as property. A background allows you to define common given clauses for all the scenario of you feature. A background must contains at least one given clause.
 
 * **scenario**(***ScenarioName***)
 
@@ -269,7 +319,7 @@ require('vibrato-bdd')('my-project-test-identifier')
 	Returns a function to set the step definition.
 	You also can use the functions and or but to add some clauses.
 	
-	Note that if a step defnition is missing, the script will work, but the test will not pass. That allow you to write first your specs without implementing the tests.
+	Note that if a step defnition is missing, the script will work, but the test will not pass. That allows you to write first your specs without implementing the tests.
 	
 	After a then, you can start a new scenario...
 
@@ -453,10 +503,15 @@ In addition to the examples function, you have three others ways to set datas in
 * ***--vibrato-tag-excluded (-vte)***
 	Scenarios related to at least one tag matching one of those listed in the option will be ignored.
 
+* ***--vibrato-context (-vc)***
+	Active all the contexts listed for running the test suite
+
 * ***--vibrato-exclude (-ve)***
 	All the features test contained in the file or directory targeted by one of path listed will not be executed. The pat hare relative to the "test-suite" directory
 
 #####In Browser testing
+
+
 
 #####Using with Karma test runner
 

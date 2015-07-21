@@ -1,15 +1,14 @@
 'use strict';
 
 var assert = require('assert');
+var _ = require('lodash');
 
-var moduleName = "", scenario = "feature background";
+var scenario = "feature background", featureIdentifier = "";
 
-var feature = function canBeInstanciated(name, resources) {
+var feature = function canBeInstanciated(moduleName, resources) {
 	var testSuite = resources.testSuite;
 
-	moduleName = name;
-
-	var bdd = new resources.VibratoBDD();
+	featureIdentifier = moduleName+" - "+_.words(feature.name).join(' ').toLowerCase();
 
 	/*
 	In order to use VibratoBDD
@@ -29,17 +28,15 @@ var feature = function canBeInstanciated(name, resources) {
 
 	scenario = "Using the class without a valid identifier (a string)";*/
 
-	scenario = testSuite.scenario(moduleName, "Using the class without a valid identifier (a string)", function () {
-		testSuite.context.needBrowser(function () {
-			bdd.browserTest();
-		});
+	scenario = "Using the class without a valid identifier (a string)";
+	
+	testSuite.scenario(featureIdentifier, scenario, function () {
 		
-		bdd.serverTest();
 	});
 };
 
 function trace (message) {
-	return (moduleName+' - '+feature.name+'\nscenario : '+scenario+' \n error : '+message);
+	return (featureIdentifier+'\nscenario : '+scenario+' \n error : '+message);
 }
 
 module.exports = feature;
