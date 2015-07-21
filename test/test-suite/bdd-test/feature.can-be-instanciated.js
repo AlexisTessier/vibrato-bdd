@@ -30,9 +30,11 @@ var feature = function canBeInstanciated(name, resources) {
 	scenario = "Using the class without a valid identifier (a string)";*/
 
 	scenario = testSuite.scenario(moduleName, "Using the class without a valid identifier (a string)", function () {
-		//if (testSuite.context.isBrowser) {
-			//assert.strictEqual(5, 8, trace("damn it"));
-		//}
+		testSuite.context.needBrowser(function () {
+			bdd.browserTest();
+		});
+		
+		bdd.serverTest();
 	});
 };
 
