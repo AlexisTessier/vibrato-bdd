@@ -15,7 +15,7 @@ About
 
 A minimalist Behaviour Driven Development. You can write your specifications and tests directly in javascript using a fluent API, based on Gherkin syntax.
 
-It works great with Karma test runner and istanbul.
+It works fine with Karma test runner and istanbul.
 
 Why use Vibrato BDD and not some tools like Cucumber ?
 -----------------------------------------------------
