@@ -2,6 +2,23 @@
 // Generated on Mon Jul 20 2015 23:32:28 GMT+0200 (Paris, Madrid (heure d’été))
 
 module.exports = function(config) {
+  if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
+    console.log('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.');
+    process.exit(1);
+  }
+
+  var customLaunchers = {
+    'SL_Chrome': {
+      base: 'SauceLabs',
+      browserName: 'chrome'
+    },
+    'SL_Firefox': {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      version: '26'
+    }
+  };
+
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -29,6 +46,10 @@ module.exports = function(config) {
       'test/browser-test.js': [ 'browserify'],
       'lib/*.js': 'coverage',
       'lib/*/*.js': 'coverage'
+    },
+
+    sauceLabs: {
+      testName: 'VibratoBDD in Browser Tests'
     },
 
     browserify: {
@@ -64,7 +85,8 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'Firefox'],
+    customLaunchers: customLaunchers,
+    browsers: Object.keys(customLaunchers)
 
 
     // Continuous Integration mode
