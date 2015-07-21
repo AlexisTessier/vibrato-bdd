@@ -1,18 +1,19 @@
 {
   "name": "vibrato-bdd",
   "version": "0.0.1",
-  "description": "A behaviour driven development framework to test code both on server and on browser",
+  "description": "A behaviour driven development framework working both on server and on browser",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/AlexisTessier/vibrato-bdd.git"
   },
   "scripts": {
-    "test": "node test"
+    "test": "node test && karma start --single-run --browsers Chrome,Firefox"
   },
   "keywords": [
     "vibrato",
-    "BDD",
+    "vibrato-module",
+    "bdd",
     "behaviour",
     "driven",
     "development",
@@ -28,17 +29,16 @@
     "gulp-plumber": "^1.0.1",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-watch": "^4.2.4",
-    "source-map-support": "^0.3.2"
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.2",
+    "karma-browserify": "^4.2.1",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-jasmine": "^0.3.6"
   },
   "dependencies": {
     "babel-runtime": "^5.7.0",
-    "browserify": "^10.2.4",
-    "chalk": "^1.1.0",
-    "connect": "^3.4.0",
     "lodash": "^3.10.0",
-    "selenium-webdriver": "^2.46.1",
-    "serve-static": "^1.10.0",
-    "socket.io": "^1.3.5",
-    "string-color": "^0.8.0"
+    "source-map-support": "^0.3.2"
   }
 }

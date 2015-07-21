@@ -13,7 +13,9 @@ I use a README as a guideline to write my specs.
 About
 -----
 
-A minimalist Behaviour Driven Development tool to test code both on server and on browser. You can write your specifications and tests directly in javascript using a fluent API, based on Gherkin syntax.
+A minimalist Behaviour Driven Development. You can write your specifications and tests directly in javascript using a fluent API, based on Gherkin syntax.
+
+It works great with Karma test runner and istanbul.
 
 Why use Vibrato BDD and not some tools like Cucumber ?
 -----------------------------------------------------
@@ -444,7 +446,7 @@ In addition to the examples function, you have three others ways to set datas in
 #####In Browser testing
 
 #####Next steps
-	Feature change detect  
+	Feature change detect
 	create and update test from .feature files  
 	create and update .feature files from test  
 	Maybe hooks

@@ -6,6 +6,7 @@ var moduleName = "", scenario = "feature background";
 
 var feature = function canBeInstanciated(name, resources) {
 	var testSuite = resources.testSuite;
+
 	moduleName = name;
 
 	var bdd = new resources.VibratoBDD();
@@ -16,32 +17,24 @@ var feature = function canBeInstanciated(name, resources) {
 	I Want to create a instance of VibratoBDD
 	*/
 
-	scenario = testSuite.addScenario("Using the factory with a valid identifier (a string)");
+	scenario = "Using the factory with a valid identifier (a string)";
 
-	testSuite.scenarioEnd(scenario); 
+	scenario = "Using the factory without a valid identifier (a string)";
 
-	scenario = testSuite.addScenario("Using the factory without a valid identifier (a string)");
+	scenario = "Using the factory with a yet used identifier";
 
-	testSuite.scenarioEnd(scenario); 
+	scenario = "Using the factory with an unused yet identifier";
 
-	scenario = testSuite.addScenario("Using the factory with a yet used identifier");
+	scenario = "Using the class with a valid identifier (a string)";
 
-	testSuite.scenarioEnd(scenario); 
-
-	scenario = testSuite.addScenario("Using the factory with an unused yet identifier");
-
-	testSuite.scenarioEnd(scenario); 
-
-	scenario = testSuite.addScenario("Using a the class with a valid identifier (a string)");
-
-	testSuite.scenarioEnd(scenario); 
-
-	scenario = testSuite.addScenario("Using a the class without a valid identifier (a string)");
-
-	testSuite.scenarioEnd(scenario);
+	scenario = "Using the class without a valid identifier (a string)";
 
 	if (testSuite.context.isBrowser) {
+		console.log('hello browser');
 		//assert.strictEqual(typeof scenario, typeof 5, trace('test failed'));
+	}
+	else{
+		console.log('hello server');
 	}
 };
 
