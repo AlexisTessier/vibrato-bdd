@@ -15,6 +15,20 @@ var testSuiteManager = {
 
 			testSuiteManager.context[contextKey] = (contextName === possibleContext);
 		}
+	},
+	scenario : function scenario(moduleName, scenarioName, scenarioTest){
+		if (testSuiteManager.context.isBrowser) {
+			describe(moduleName, function () {
+				it(scenarioName, function () {
+					scenarioTest();
+				})
+			});
+		}
+		else{
+			scenarioTest();
+		}
+
+		return scenarioName;
 	}
 };
 

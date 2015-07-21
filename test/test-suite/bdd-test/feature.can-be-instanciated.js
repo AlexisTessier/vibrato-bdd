@@ -17,7 +17,7 @@ var feature = function canBeInstanciated(name, resources) {
 	I Want to create a instance of VibratoBDD
 	*/
 
-	scenario = "Using the factory with a valid identifier (a string)";
+	/*scenario = "Using the factory with a valid identifier (a string)";
 
 	scenario = "Using the factory without a valid identifier (a string)";
 
@@ -27,15 +27,13 @@ var feature = function canBeInstanciated(name, resources) {
 
 	scenario = "Using the class with a valid identifier (a string)";
 
-	scenario = "Using the class without a valid identifier (a string)";
+	scenario = "Using the class without a valid identifier (a string)";*/
 
-	if (testSuite.context.isBrowser) {
-		console.log('hello browser');
-		//assert.strictEqual(typeof scenario, typeof 5, trace('test failed'));
-	}
-	else{
-		console.log('hello server');
-	}
+	scenario = testSuite.scenario(moduleName, "Using the class without a valid identifier (a string)", function () {
+		//if (testSuite.context.isBrowser) {
+			//assert.strictEqual(5, 8, trace("damn it"));
+		//}
+	});
 };
 
 function trace (message) {
