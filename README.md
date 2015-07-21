@@ -13,12 +13,12 @@ I use a README as a guideline to write my specs.
 About
 -----
 
-A minimalist Behaviour Driven Development. You can write your specifications and tests directly in javascript using a fluent API, based on Gherkin syntax.
+A minimalist Behaviour Driven Development framework. You can write your specifications and tests directly in javascript using a fluent API, based on Gherkin syntax.
 
 It works fine with Karma test runner and istanbul.
 
-Why use Vibrato BDD and not some tools like Cucumber ?
------------------------------------------------------
+Why use Vibrato BDD ?
+---------------------
 
 BDD and the Gherkin syntax are great tools. They allow you to clearly define what you need to test, and they force you to think how your code will work before starting to write it.
 
@@ -406,6 +406,8 @@ In addition to the examples function, you have three others ways to set datas in
 	//.................................
 	```
 
+#####More
+
 * **tag**(***tagNameList***)
 	
 	Tags allow you to group scenarios. You can set one or many tags on features, scenario or examples (one line or all).
@@ -443,7 +445,22 @@ In addition to the examples function, you have three others ways to set datas in
 
 		node test -vt poney dog
 
+#####Command line options
+
+* ***--vibrato-tag (-vt)***
+	Only scenarios related to at least one tag matching one of those listed in the option will be launched.
+
+* ***--vibrato-tag-excluded (-vte)***
+	Scenarios related to at least one tag matching one of those listed in the option will be ignored.
+
+* ***--vibrato-exclude (-ve)***
+	All the features test contained in the file or directory targeted by one of path listed will not be executed. The pat hare relative to the "test-suite" directory
+
 #####In Browser testing
+
+#####Using with Karma test runner
+
+#####Using with Karma + Istanbul + Travis + Coveralls
 
 #####Next steps
 	Feature change detect
