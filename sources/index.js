@@ -12,6 +12,15 @@ var contextIsBrowser = (typeof window === 'object' && typeof document === 'objec
 class VibratoBDD {
 	constructor(args) {
 	}
+
+	browserTest(){
+		console.log('hello browser');
+		alert('coconut');
+	}
+
+	serverTest(){
+		console.log('hello server');
+	}
 }
 
 export default VibratoBDD;

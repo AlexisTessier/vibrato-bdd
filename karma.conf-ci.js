@@ -39,8 +39,8 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'test/browser-test.js': [ 'browserify'],
-      'lib/*.js': 'coverage',
-      'lib/*/*.js': 'coverage'
+      'lib/*.js': ['coverage'],
+      'lib/*/*.js': ['coverage']
     },
 
     sauceLabs: {
