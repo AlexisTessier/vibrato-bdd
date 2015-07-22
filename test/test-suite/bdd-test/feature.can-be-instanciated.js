@@ -3,12 +3,12 @@
 var assert = require('assert');
 var _ = require('lodash');
 
-var scenario = "feature background", featureIdentifier = "";
-
-var feature = function canBeInstanciated(moduleName, resources) {
+var feature = function canBeInstanciated(resources) {
 	var testSuite = resources.testSuite;
 
-	featureIdentifier = moduleName+" - "+_.words(feature.name).join(' ').toLowerCase();
+	console.cleanContent();
+
+	testSuite.describe.feature(feature);
 
 	/*
 	In order to use VibratoBDD
@@ -16,27 +16,43 @@ var feature = function canBeInstanciated(moduleName, resources) {
 	I Want to create a instance of VibratoBDD
 	*/
 
-	/*scenario = "Using the factory with a valid identifier (a string)";
+	//Given I required the VibratoBDD module
+		var VibratoBDD = resources.VibratoBDD;
+	//And I have a valid identifier
+		var mainValidIdentifier = resources.validIdentifierList[0];
+	//And unvalid identifier list
+		var unvalidIdentifierList = resources.unvalidIdentifierList;
 
-	scenario = "Using the factory without a valid identifier (a string)";
+	testSuite.scenario("Using the factory with a valid identifier (a string)", function (trace) {
+		var bdd = VibratoBDD(mainValidIdentifier);
 
-	scenario = "Using the factory with a yet used identifier";
+		assert.strictEqual((bdd instanceof VibratoBDD.class), true, trace('VibratoBDD function should return an instance of VibratoBDD.class'));
+		assert.strictEqual(bdd.identifier, mainValidIdentifier, trace('bdd.identifier should be equal to mainValidIdentifier'));
+	})
 
-	scenario = "Using the factory with an unused yet identifier";
-
-	scenario = "Using the class with a valid identifier (a string)";
-
-	scenario = "Using the class without a valid identifier (a string)";*/
-
-	scenario = "Using the class without a valid identifier (a string)";
-	
-	testSuite.scenario(featureIdentifier, scenario, function () {
+	.scenario("Using the factory without a valid identifier (a string)", function (trace) {
+		var errorMessage = resources.specifications.errorMessage.usingTheFactoryWithoutValidIdentifier;
 		
-	});
-};
+		assert.throws(
+		  function() {
+		    VibratoBDD();
+		    _.forEach(unvalidIdentifierList, function(unvalidIdentifier) {
+		    	VibratoBDD(unvalidIdentifier);
+		    });
+		  },
+		  new RegExp(errorMessage),
+		  trace('should throw an error with message : ' + errorMessage)
+		);
+	})
 
-function trace (message) {
-	return (featureIdentifier+'\nscenario : '+scenario+' \n error : '+message);
-}
+	.scenario("Using the factory with a yet used identifier")
+
+	.scenario("Using the factory with an unused yet identifier")
+
+	.scenario("Using the class with a valid identifier (a string)")
+
+	.scenario("Using the class without a valid identifier (a string)", function (trace) {
+	})
+};
 
 module.exports = feature;

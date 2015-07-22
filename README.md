@@ -126,8 +126,8 @@ How to use
 	node test
 	```
 
-Reference
----------
+BDD and Gherkin
+----------------
 
 Read that page before all :
 
@@ -157,7 +157,7 @@ returns a function taking a identifier string as single parameter. That function
 
 * **setResource**(***resourceName***, ***resource***)
 
-	save ***resource*** and set it as a property of your step definitions. Note if you just indicate the resource as a single parameter, the ***resourceName*** is setted by default with the constructor/class name of your resource (if possible).
+	save ***resource*** and set it as a property of your step definitions. Note if you just indicate the resource as a single parameter, the ***resourceName*** is setted by default with the constructor name of your resource if it's a class or with the name if it's a function.
 
 	By default, one resource named context is already setted (see later).
 
@@ -322,6 +322,24 @@ require('vibrato-bdd')('my-project-test-identifier')
 	Note that if a step defnition is missing, the script will work, but the test will not pass. That allows you to write first your specs without implementing the tests.
 	
 	After a then, you can start a new scenario...
+
+#####Describing simple scenarios
+
+Some scenarios can be very simple, and sometimes, using the given, when, and then clauses could be kind of overkilled. In these case, you can define the scenario test function directly after the scenario method, without using the given, when and then methods.
+
+```javascript
+require('vibrato-bdd')('my-test-identifier')
+
+.describe.feature('a basic feature')(
+	'a simple description'
+)
+
+.scenario("My ultra very simple scenario")
+	(function scenario_definition(end){
+		//do your very simple stuff
+		end();
+	})
+```
 
 #####Outline examples
 
@@ -510,8 +528,6 @@ In addition to the examples function, you have three others ways to set datas in
 	All the features test contained in the file or directory targeted by one of path listed will not be executed. The pat hare relative to the "test-suite" directory
 
 #####In Browser testing
-
-
 
 #####Using with Karma test runner
 

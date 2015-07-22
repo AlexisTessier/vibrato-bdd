@@ -33,20 +33,37 @@ var testSuiteManager = {
 			})(contextKey);
 		}
 	},
-	scenario : function scenario(moduleName, scenarioName, scenarioTest){
-		if (testSuiteManager.context.isBrowser) {
-			describe(moduleName, function () {
-				it(scenarioName, function () {
-					scenarioTest();
-				})
-			});
-		}
-		else{
-			scenarioTest();
+	scenario : function scenario(scenarioName, scenarioTest){
+		if (typeof scenarioTest === "function") {
+			var trace = (function (featureID) {
+				return (function (message) {
+					return (featureID+'\nscenario : '+scenarioName+' \n error : '+message);
+				});
+			})(testSuiteManager.currentFeatureIdentifier);
+
+			if (testSuiteManager.context.isBrowser) {
+				describe(testSuiteManager.currentModuleName, function () {
+					it(scenarioName, function () {
+						scenarioTest(trace);
+					})
+				});
+			}
+			else{
+				scenarioTest(trace);
+			}
 		}
 
-		return scenarioName;
-	}
+		return testSuiteManager;
+	},
+	describe : {
+		feature : function (func) {
+			testSuiteManager.currentFeatureIdentifier = testSuiteManager.currentModuleName+" - "+_.words(func.name).join(' ').toLowerCase();
+
+			return testSuiteManager;
+		}
+	},
+	currentFeatureIdentifier : '',
+	currentModuleName : ''
 };
 
 module.exports = testSuiteManager;
