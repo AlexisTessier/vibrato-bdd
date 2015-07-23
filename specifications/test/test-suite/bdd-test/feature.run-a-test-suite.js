@@ -66,15 +66,23 @@ var feature = function runATestSuite(resources) {
 	.scenario("use runTestSuite method without requireTestSuiteFunction as first parameters", function (trace) {
 		var errorMessage = resources.specifications.errorMessage.usingRunTestSuiteWithoutFunctionAsParameter;
 		
+		_.forEach(resources.notAFunctionList, function (notAFunction) {
+			assert.throws(
+			  function() {
+			  	bdd.runTestSuite(notAFunction);
+			  },
+			  new RegExp(errorMessage(bdd.identifier, notAFunction)),
+			  trace('should throw an error with message : ' + errorMessage(bdd.identifier, notAFunction))
+			);
+			bdd.runTestSuite(notAFunction);
+		});
+
 		assert.throws(
 		  function() {
 		  	bdd.runTestSuite();
-			_.forEach(resources.notAFunctionList, function (notAFunction) {
-				bdd.runTestSuite(notAFunction);
-			});
 		  },
-		  new RegExp(errorMessage),
-		  trace('should throw an error with message : ' + errorMessage)
+		  new RegExp(errorMessage(bdd.identifier)),
+		  trace('should throw an error with message : ' + errorMessage(bdd.identifier))
 		);
 	})
 
@@ -86,8 +94,8 @@ var feature = function runATestSuite(resources) {
 		  	bdd.runTestSuite(function () {
 		  	});
 		  },
-		  new RegExp(errorMessage),
-		  trace('should throw an error with message : ' + errorMessage)
+		  new RegExp(errorMessage(bdd.identifier)),
+		  trace('should throw an error with message : ' + errorMessage(bdd.identifier))
 		);
 	});
 };

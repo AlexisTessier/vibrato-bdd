@@ -1,6 +1,6 @@
 'use strict';
 
-var VibratoBDD = require('../../../lib');
+var VibratoBDD = require('../../../../index');
 var _ = require('lodash');
 
 var featureDescriptionList = {

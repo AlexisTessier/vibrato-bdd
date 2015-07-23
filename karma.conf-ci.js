@@ -27,7 +27,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/browser-test.js'
+      'specifications/test/browser-test.js'
     ],
 
 
@@ -38,7 +38,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/browser-test.js': [ 'browserify'],
+      'specifications/test/browser-test.js': [ 'browserify'],
       'lib/*.js': ['coverage'],
       'lib/*/*.js': ['coverage']
     },
@@ -86,6 +86,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: true
   })
 }
