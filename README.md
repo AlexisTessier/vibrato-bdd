@@ -172,6 +172,19 @@ returns a function taking a identifier string as single parameter. That function
 	* **features.failed**
 		The features tests ended with error
 
+	The structure of the features objects listed in these Array is the following :
+
+	* **name**
+		A string containing the name of the feature
+	* **description**
+		A string containing the description of the feature
+	* **background**
+		An Array containing all the given clauses in the feature background
+	* **scenarioList**
+		An Array containing all the scenarios of the feature
+	* **block**
+		The function which will be called to run the test
+
 * **setResource**(***resourceName***, ***resource***)
 
 	save ***resource*** and set it as a property of your step definitions. Note if you just indicate the resource as a single parameter, the ***resourceName*** is setted by default with the constructor name of your resource if it's a class or with the name if it's a function.

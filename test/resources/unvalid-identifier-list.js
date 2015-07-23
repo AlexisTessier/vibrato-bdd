@@ -9,7 +9,13 @@ var unvalidIdentifierList = [
 	function () {},
 	{},
 	[],
-	""
+	"", 
+	" ",
+	"    ",
+	"	  ",
+	" 	  ",
+	"		",
+	"	  		"
 ];
 
 module.exports = unvalidIdentifierList;
