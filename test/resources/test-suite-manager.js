@@ -41,15 +41,26 @@ var testSuiteManager = {
 				});
 			})(testSuiteManager.currentFeatureIdentifier);
 
+			var testFunction = function () {
+				try{
+					scenarioTest(trace);
+				}
+				catch(e){
+					e.message = trace(e.message);
+					
+					throw e;
+				}
+			};
+
 			if (testSuiteManager.context.isBrowser) {
 				describe(testSuiteManager.currentModuleName, function () {
 					it(scenarioName, function () {
-						scenarioTest(trace);
+						testFunction();
 					})
 				});
 			}
 			else{
-				scenarioTest(trace);
+				testFunction();
 			}
 		}
 

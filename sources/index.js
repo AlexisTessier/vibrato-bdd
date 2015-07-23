@@ -1,8 +1,37 @@
+var _ = require('lodash');
+
 var specs = require('../specifications');
 
 function identifierIsValid (identifier) {
-	return (typeof identifier === "string" && identifier.length > 0);
+	return (_.isString(identifier) && identifier.length > 0);
 }
+
+/*---------------------*/
+/*---------------------*/
+/*---------------------*/
+
+function featureDescriptionSetterGenerator (bdd, featureName) {
+	return function featureDescriptionSetter () {
+	};
+};
+
+function featureDescriberGenerator (bdd) {
+	var featureDescriber = function featureDescriber(featureName) {
+
+		setFeatureNamed.call(bdd, featureName, function () {
+		});
+
+		return featureDescriptionSetterGenerator(bdd, featureName);
+	};
+
+	return featureDescriber;
+}
+
+/*---------------------*/
+/*---------------------*/
+/*---------------------*/
+
+var indexedFeatures = Symbol();
 
 class VibratoBDD {
   constructor({
@@ -10,8 +39,72 @@ class VibratoBDD {
   }={}) {
 
   	this.identifier = identifierIsValid(identifier) ? identifier : null;
+
+  	initFeatureList.call(this);
+
+  	this.describe = {
+  		feature : featureDescriberGenerator(this)
+  	};
+  }
+
+  runTestSuite(requireTestSuiteFunction, tagList = ""){
+  	initFeatureList.call(this);
+
+  	if (_.isFunction(requireTestSuiteFunction)) {
+  		requireTestSuiteFunction();
+  	}
+  	else{
+  		throw new Error(specs.errorMessage.usingRunTestSuiteWithoutFunctionAsParameter);
+  	}
+
+  	if (this.features.all.length <= 0) {
+  		throw new Error(specs.errorMessage.usingRunTestSuiteWithNoFeatureDescription);
+  	}
+
+  	start.call(this);
   }
 }
+
+VibratoBDD.publicAPI = function () {
+	return Object.getOwnPropertyNames(VibratoBDD.prototype);
+};
+
+function initFeatureList() {
+	this[indexedFeatures] = {};
+
+  	this.features = {
+  		all : [],
+  		started : [],
+  		running : [],
+  		passed : [],
+  		failed : []
+  	};
+}
+
+function start() {
+	_.forEach(this[indexedFeatures], (feature)=>{
+		feature.block();
+  		this.features.started.push(feature);
+  	});
+}
+
+function getFeatureNamed(featureName){
+	return this[indexedFeatures][featureName];
+}
+
+function setFeatureNamed(name, block){
+	this.features.all.push(this[indexedFeatures][name] = {
+		name,
+		description : null,
+		background : {},
+		scenarioList : [],
+		block
+	});
+}
+
+/*---------------------*/
+/*---------------------*/
+/*---------------------*/
 
 var VibratoBDDPool = {};
 
@@ -19,8 +112,8 @@ function VibratoBDDFactory(identifier){
 	if (!identifierIsValid(identifier)) {
 		throw new Error(specs.errorMessage.usingTheFactoryWithoutValidIdentifier);
 	}
-	
-	return (VibratoBDDPool[identifier] = new VibratoBDD({identifier}));
+
+	return (VibratoBDDPool[identifier] || (VibratoBDDPool[identifier] = new VibratoBDD({identifier})));
 }
 
 VibratoBDDFactory.class = VibratoBDD;

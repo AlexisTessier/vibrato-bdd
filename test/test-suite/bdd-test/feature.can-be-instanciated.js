@@ -16,18 +16,15 @@ var feature = function canBeInstanciated(resources) {
 	I Want to create a instance of VibratoBDD
 	*/
 
-	//Given I required the VibratoBDD module
-		var VibratoBDD = resources.VibratoBDD;
-	//And I have a valid identifier
-		var mainValidIdentifier = resources.validIdentifierList[0];
-	//And unvalid identifier list
-		var unvalidIdentifierList = resources.unvalidIdentifierList;
+	var VibratoBDD = resources.VibratoBDD;
+	var unvalidIdentifierList = resources.unvalidIdentifierList;
 
 	testSuite.scenario("Using the factory with a valid identifier (a string)", function (trace) {
-		var bdd = VibratoBDD(mainValidIdentifier);
+		var validIdentifier = resources.validIdentifier.new();
+		var bdd = VibratoBDD(validIdentifier);
 
 		assert.strictEqual((bdd instanceof VibratoBDD.class), true, trace('VibratoBDD function should return an instance of VibratoBDD.class'));
-		assert.strictEqual(bdd.identifier, mainValidIdentifier, trace('bdd.identifier should be equal to mainValidIdentifier'));
+		assert.strictEqual(bdd.identifier, validIdentifier, trace('bdd.identifier should be equal to validIdentifier'));
 	})
 
 	.scenario("Using the factory without a valid identifier (a string)", function (trace) {
@@ -45,13 +42,44 @@ var feature = function canBeInstanciated(resources) {
 		);
 	})
 
-	.scenario("Using the factory with a yet used identifier")
+	.scenario("Using the factory with a yet used identifier", function (trace) {
+		//Given I have yet defined a VibratoBDD instance from factory
+		var validIdentifier = resources.validIdentifier.new();
+		var firstBDDInstance = VibratoBDD(validIdentifier);
 
-	.scenario("Using the factory with an unused yet identifier")
+		//When i use the factory with the same identifier
+		var secondBDDInstance = VibratoBDD(validIdentifier);
 
-	.scenario("Using the class with a valid identifier (a string)")
+		//Then it returns the same object
+		firstBDDInstance.someKeyJustForTesting = "some key just for testing";
+
+		assert.strictEqual((firstBDDInstance instanceof VibratoBDD.class), true, trace('VibratoBDD function should return an instance of VibratoBDD.class'));
+		assert.strictEqual((secondBDDInstance instanceof VibratoBDD.class), true, trace('VibratoBDD function should return an instance of VibratoBDD.class'));
+		assert.strictEqual(firstBDDInstance.someKeyJustForTesting, secondBDDInstance.someKeyJustForTesting,
+			trace('should return the VibratoBDD instance previously created')
+		);
+
+	})
+
+	.scenario("Using the class with a valid identifier (a string)", function (trace) {
+		var validIdentifier = resources.validIdentifier.new();
+		
+		var bdd = new VibratoBDD.class({identifier : validIdentifier});
+
+		assert.strictEqual((bdd instanceof VibratoBDD.class), true, trace('new VibratoBDD.class() should return an instance of VibratoBDD.class'));
+		assert.strictEqual(bdd.identifier, validIdentifier, trace('bdd.identifier should be equal to validIdentifier'));
+	})
 
 	.scenario("Using the class without a valid identifier (a string)", function (trace) {
+		var bdd = new VibratoBDD.class();
+
+		assert.strictEqual(bdd.identifier, null, trace('bdd.identifier should be null'));
+
+		_.forEach(unvalidIdentifierList, function(unvalidIdentifier) {
+		  	bdd = new VibratoBDD.class({identifier : unvalidIdentifier});
+
+		  	assert.strictEqual(bdd.identifier, null, trace('bdd.identifier should be null'));
+		});
 	})
 };
 

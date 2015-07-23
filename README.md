@@ -13,7 +13,7 @@ I use a README as a guideline to write my specs.
 About
 -----
 
-A minimalist Behaviour Driven Development framework. You can write your specifications and tests directly in javascript using a fluent API, based on Gherkin syntax.
+A Behaviour Driven Development framework. You can write your specifications and tests directly in javascript using a fluent API, based on Gherkin syntax.
 
 It works fine with Karma test runner and istanbul.
 
@@ -36,7 +36,7 @@ How to use
 
 1.	First, **create a "test" directory** at root of your project
 
-2.	then, **add in it, a "test-suite" folder** where you will **write your features tests** in distinct files (organize them as you want)
+2.	then, **write your features tests** in distinct files in a "test-suite" directory for example (but organize them as you want)
 
 	```javascript
 	/* my-project/test/test-suite/my-feature-test.js */
@@ -65,8 +65,10 @@ How to use
 	.setResource('deepEqual', require('my-deep-equal-function'))
 	//deepEqual will be accessible in the this object of your step definitions
 
-	.runTestSuiteFrom(__dirname);
-	//then just run the test suite
+	.runTestSuite(function(){
+		require('./test-suite/my-feature-test');
+	});
+	//then just run the features tests you want, using a require
 	```
 
 4. go back to your feature test file and **write your step definitions**
@@ -153,7 +155,22 @@ returns a function taking a identifier string as single parameter. That function
 
 * **describe**
 
-	Use that property to start the chain for feature description. This object contains a single function named feature.
+	Use that property to start the chain for feature description. This object contains a single function named feature which create a feature function and add it in the **features** property of current VibratoBDD instance (see next).
+
+* **features**
+
+	An object containing many Arrays :
+
+	* **features.all**
+		All the features tests in your test suite
+	* **features.started**
+		The features tests actually launched
+	* **features.running**
+		The features tests currently running
+	* **features.passed**
+		The features tests ended without error
+	* **features.failed**
+		The features tests ended with error
 
 * **setResource**(***resourceName***, ***resource***)
 
@@ -161,17 +178,17 @@ returns a function taking a identifier string as single parameter. That function
 
 	By default, one resource named context is already setted (see later).
 
-* **excludeTest**(***testToExclude***)
+* **excludeFeature**(***featureToExclude***)
 
-	***testToExclude*** must be a string or an array of string. All the features test contained in the file or directory targeted by the path ***testToExclude*** will not be executed. The path is relative to the "test-suite" directory
+	***featureToExclude*** must be a string or an array of string. All the features with their name in ***featureToExclude*** will not be executed.
 
 	```javascript
 	/* my-project/test/index.js */
 
 	require('vibrato-bdd')('my-project-test-identifier')
 
-	.excludeTest("some-group-of-test/an-object-features")
-	//all the tests in "my-project/test/test-suite/some-group-of-test/an-object-features" will be ignored
+	.excludeFeature("an-object-feature")
+	//Now, even if it's required in the runTestSuite latter, the feature named "an-object-feature" will be ignored
 	```
 
 * **excludeTag**(***tagListToExclude***)
@@ -186,28 +203,71 @@ returns a function taking a identifier string as single parameter. That function
 	.excludeTag('tagOne tagTwo otherTag')
 	```
 
-* **useContext**(***contextName***)
-	
-	This method allows you to active a specific context to run the test suite. Admitting you have a file named "my-own-context-test.js" (you have to use the "-test" suffix) in your "test" directory, then automatically, "my-own-context" will be listed as a possible context when you run the test suite.
+* **setContextList**(***contextList***)
+	***contextList*** must be an Array of string. Each string is the name of one possible context for your tests.
+
+	```javascript
+	//........................
+
+	.setContextList(['server', 'browser'])
+	```
 
 	Then, in your "context" resource, your have an access to two methods for each possible context :
 
-	* **isMyOwnContext**()  
+	* **is[camel cased context name]**()  
 		Return true if the context is activated
 
-	* **needMyOwnContext**(***callback***)  
-		Executes the callback function, but  if the context isn't activated, errors will be catched and ignored.
+		```javascript
+		//In a feature description
+		//........................
+
+		.scenario("Some scenario")
+			.given("given clause")
+
+				(function given_step_definition(next){
+
+					if(this.context.isBrowser()){
+						doSomethingWith(window);
+					}
+
+					next();
+				})
+		```
+
+	* **need[camel cased context name]**(***block***)
+		Executes the ***block*** function, but if the context isn't activated, errors will be catched and ignored. For better code coverage, you should use this function in place of the "is" method.
+
+		```javascript
+		//In a feature description
+		//........................
+
+		.scenario("Some scenario")
+			.given("given clause")
+
+				(function given_step_definition(next){
+
+					this.context.needBrowser(function(){
+						doSomethingWith(window);
+					});
+
+					next();
+				})
+		```
 
 	You can know if neither context is activated, using the context method :
 
 	* **no**()  
 		Return true if neither context is activated
 
+* **useContext**(***contextName***)
+	
+	This method allows you to active a specific context to run the test suite.
+
 	See In Browser Testing for examples.
 
-* **runTestSuiteFrom**(***testDirectoryPath*** [, ***tagList***])
+* **runTestSuite**(***requireTestSuiteFunction*** [, ***tagList***])
 	
-	This method launch all the javascript files in the "test-suite" directory (unless they were excluded), then run the test. If ***tagList*** is a string, only the scenarios with a related tag matching one of those in ***tagList*** will be launched (Unless they were previously excluded).
+	***requireTestSuiteFunction*** must be a function. In it you have to require all your file containing feature description. If ***tagList*** is a string, only the scenarios with a related tag matching one of those in ***tagList*** will be launched (Unless they were previously excluded), else it runs all your scenarios.
 
 * **TagList parameter**
 	
@@ -221,21 +281,21 @@ returns a function taking a identifier string as single parameter. That function
 
 	require('vibrato-bdd')('my-project-test-identifier')
 
-	.runTestSuiteFrom(__dirname, 'animal & bunny cat')
+	.runTestSuite(function(){/*...*/}, 'animal & bunny cat')
 	//run the scenario related to ("animal" and "bunny"), or ("cat")
 
-	.runTestSuiteFrom(__dirname, '(animal & bunny) cat')
+	.runTestSuite(function(){/*...*/}, '(animal & bunny) cat')
 	//run the scenario related to ("animal" and "bunny"), or ("cat")
 
-	.runTestSuiteFrom(__dirname, 'animal & (bunny cat)')
+	.runTestSuite(function(){/*...*/}, 'animal & (bunny cat)')
 	//run the scenario related to ("animal" and "bunny"), or ("animal" and "cat")
 
-	.runTestSuiteFrom(__dirname, 'animal & bunny (painting & human & (animal & cat book & (dragon unicorn)))')
+	.runTestSuite(function(){/*...*/}, 'animal & bunny (painting & human & (animal & cat book & (dragon unicorn)))')
 	//run the scenario related to ("animal" and "bunny"),
 	//or ("painting" and "human" and "animal" and "cat"), 
 	//or ("painting" and "human" and "book" and "dragon"),
 	//or ("painting" and "human" and "book" and "unicorn")
-	//but i mean, avoid these complex filterings...
+	//but i mean, avoid these complex filterings, it's unreadable...
 	```
 
 ####How to describe a feature
@@ -310,9 +370,7 @@ require('vibrato-bdd')('my-project-test-identifier')
 	Start to describe a scenario and returns an object with the given function as property
 	You can have multiple scenario for one feature. A scenario must have at least one "given" clause, one "when" clause and one "then" clause (in this order).
 	
-* **given**(***clauseName***)
-* **when**(***clauseName***)
-* **then**(***clauseName***)
+* **given**(***clauseName***), **when**(***clauseName***), **then**(***clauseName***), **and**(***clauseName***), **but**(***clauseName***)
 
 	Start to describe a given, a when or a then clause.
 	
@@ -506,7 +564,7 @@ In addition to the examples function, you have three others ways to set datas in
 	```javascript
 	require('vibrato-bdd')('my-project-identifier')
 
-	.runTestSuiteFrom(__dirname, 'poney cat');
+	.runTestSuite(function(){/*...*/}, 'poney cat');
 	```
 
 	or another one from the cli, when using the command "node test", with the --vibrato-tag (-vt) option :
@@ -525,7 +583,7 @@ In addition to the examples function, you have three others ways to set datas in
 	Active all the contexts listed for running the test suite
 
 * ***--vibrato-exclude (-ve)***
-	All the features test contained in the file or directory targeted by one of path listed will not be executed. The pat hare relative to the "test-suite" directory
+	All the features with their name listed will not be executed.
 
 #####In Browser testing
 
