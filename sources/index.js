@@ -1,6 +1,7 @@
 var _ = require('lodash');
 
-var specs = require('../specifications');
+var specifications = require('../specifications');
+var messages = specifications.messages;
 
 /*---------------------*/
 /*---------------------*/
@@ -9,64 +10,60 @@ var specs = require('../specifications');
 var indexedFeatures = Symbol();
 
 class VibratoBDD {
-  constructor({
-  	identifier = null
-  }={}) {
+	constructor({
+		identifier = null
+	}={}) {
 
-  	this.identifier = identifierIsValid(identifier) ? identifier : null;
+		this.identifier = identifierIsValid(identifier) ? identifier : null;
 
-  	initFeatureList.call(this);
+		initFeatureList.call(this);
 
-  	this.describe = {
-  		feature : featureDescriberGenerator(this)
-  	};
-  }
+		this.describe = {
+			feature : featureDescriberGenerator(this)
+		};
+	}
 
-  runTestSuite(requireTestSuiteFunction, tagList = ""){
-  	initFeatureList.call(this);
+	runTestSuite(requireTestSuiteFunction, tagList = ""){
+		initFeatureList.call(this);
 
-  	if (_.isFunction(requireTestSuiteFunction)) {
-  		requireTestSuiteFunction();
-  	}
-  	else{
-  		throw new Error(specs.errorMessage.usingRunTestSuiteWithoutFunctionAsParameter);
-  	}
+		if (_.isFunction(requireTestSuiteFunction)) {
+			requireTestSuiteFunction();
+		}
+		else{
+			throw new Error(specs.errorMessage.usingRunTestSuiteWithoutFunctionAsParameter);
+		}
 
-  	if (this.features.all.length <= 0) {
-  		throw new Error(specs.errorMessage.usingRunTestSuiteWithNoFeatureDescription);
-  	}
+		if (this.features.all.length <= 0) {
+			throw new Error(specs.errorMessage.usingRunTestSuiteWithNoFeatureDescription);
+		}
 
-  	start.call(this);
-  }
+		start.call(this);
+	}
 }
-
-VibratoBDD.publicAPI = function () {
-	return Object.getOwnPropertyNames(VibratoBDD.prototype);
-};
 
 function initFeatureList() {
 	this[indexedFeatures] = {};
 
-  	this.features = {
-  		all : [],
-  		started : [],
-  		running : [],
-  		passed : [],
-  		failed : []
-  	};
+	this.features = {
+		all : [],
+		started : [],
+		running : [],
+		passed : [],
+		failed : []
+	};
 }
 
 function start() {
 	_.forEach(this[indexedFeatures], (feature)=>{
 		feature.block();
-  		this.features.started.push(feature);
-  	});
+		this.features.started.push(feature);
+	});
 }
 
 function setFeatureNamed(name, block){
 	this.features.all.push(this[indexedFeatures][_.camelCase(name)] = {
 		name,
-		description : null,
+		description : "",
 		background : [],
 		scenarioList : [],
 		block
@@ -78,7 +75,7 @@ function setFeatureNamed(name, block){
 /*---------------------*/
 
 function identifierIsValid (identifier) {
-  return (_.isString(identifier) && _.trim(identifier).length > 0);
+	return (_.isString(identifier) && _.trim(identifier).length > 0);
 }
 
 /*---------------------*/
@@ -86,19 +83,19 @@ function identifierIsValid (identifier) {
 /*---------------------*/
 
 function featureDescriptionSetterGenerator (bdd, featureName) {
-  return function featureDescriptionSetter () {
-  };
+	return function featureDescriptionSetter () {
+	};
 };
 
 function featureDescriberGenerator (bdd) {
-  var featureDescriber = function featureDescriber(featureName) {
-    setFeatureNamed.call(bdd, featureName, function () {
-    });
+	var featureDescriber = function featureDescriber(featureName) {
+		setFeatureNamed.call(bdd, featureName, function () {
+		});
 
-    return featureDescriptionSetterGenerator(bdd, featureName);
-  };
+		return featureDescriptionSetterGenerator(bdd, featureName);
+	};
 
-  return featureDescriber;
+	return featureDescriber;
 }
 
 /*---------------------*/
@@ -109,7 +106,7 @@ var VibratoBDDPool = {};
 
 function VibratoBDDFactory(identifier){
 	if (!identifierIsValid(identifier)) {
-		throw new Error(specs.errorMessage.usingTheFactoryWithoutValidIdentifier);
+		throw new Error(messages.factory.error.usingTheFactoryWithAnUnvalidIdentifier(identifier));
 	}
 
 	return (VibratoBDDPool[identifier] || (VibratoBDDPool[identifier] = new VibratoBDD({identifier})));

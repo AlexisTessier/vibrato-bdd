@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var chalk = require('chalk');
 
 var scenarioDoneList = {};
 
@@ -25,7 +26,8 @@ var testSuiteManager = {
 							callback();
 						}
 						catch(e){
-							console.log('Error catched because test need context '+(_.kebabCase(currentContextKey).split('-')[1]));
+							var notice = 'Error catched because test need context '+(_.kebabCase(currentContextKey).split('-')[1]);
+							console.log(testSuiteManager.context.isServer ? chalk.yellow(notice) : notice);
 						}
 					}
 				};
@@ -34,10 +36,11 @@ var testSuiteManager = {
 		}
 	},
 	scenario : function scenario(scenarioName, scenarioTest){
+		var traceStartMarker = '#trace : ';
 		if (typeof scenarioTest === "function") {
 			var trace = (function (featureID) {
 				return (function (message) {
-					return (featureID+'\nscenario : '+scenarioName+' \n error : '+message);
+					return (traceStartMarker+featureID+'\nscenario : '+scenarioName+' \n error : '+message);
 				});
 			})(testSuiteManager.currentFeatureIdentifier);
 
@@ -46,8 +49,12 @@ var testSuiteManager = {
 					scenarioTest(trace);
 				}
 				catch(e){
-					e.message = trace(e.message);
-					
+					e.message = e.message.indexOf(traceStartMarker) === 0 ? e.message : trace(e.message);
+
+					if (testSuiteManager.context.isServer) {
+						e.message = chalk.red(e.message);
+					}
+
 					throw e;
 				}
 			};

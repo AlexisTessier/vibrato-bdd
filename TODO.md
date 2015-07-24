@@ -1,10 +1,10 @@
-#Describing Features
+#Features
 
-* can be instanciated
-* factory
-* describe
-* feature
-* features list
+* can be instanciated OK
+* factory OK
+* describe OK
+* features list OK
+* feature IN PROGRESS
 * feature description
 * scenario
 * simple scenario definition
@@ -28,4 +28,4 @@
 * run some tags
 * specific context can be used
 
-# Describe some examples scenario
+# Some examples scenario

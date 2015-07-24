@@ -2,11 +2,12 @@
 
 var messages = {
 
-	canBeInstanciated : require('./can-be-instanciated')
+	canBeInstanciated : require('./can-be-instanciated'),
+	factory : require('./factory')
 /*
 	errorMessage : {
 	
-	usingTheFactoryWithoutValidIdentifier : function (identifier) {
+	usingTheFactoryWithAnUnalidIdentifier : function (identifier) {
 		return ""+
 "The VibratoBDD function needs a string as identifier to instantiate and save a VibratoBDD object or retrieve a previously saved instance.\n"+
 "\""+identifier+"\" isn't a valid identifier";
