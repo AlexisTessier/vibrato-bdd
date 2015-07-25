@@ -11,7 +11,8 @@ var resources = {
 	featureDescription : require('./feature-description'),
 	notAFunctionList : require('./not-a-function-list'),
 	markers : require('./markers'),
-	errorWithMessage : require('./error-with-message')
+	errorWithMessage : require('./error-with-message'),
+	testStateList : require('./test-state-list')
 };
 
 module.exports = resources;

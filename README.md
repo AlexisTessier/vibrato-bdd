@@ -65,10 +65,13 @@ How to use
 	.setResource('deepEqual', require('my-deep-equal-function'))
 	//deepEqual will be accessible in the this object of your step definitions
 
-	.runTestSuite(function(){
+	.buildTestSuite(function(){
 		require('./test-suite/my-feature-test');
-	});
-	//then just run the features tests you want, using a require
+	})
+	//Choose the features tests you want to test, using a require
+
+	.runTestSuite();
+	//then just launch your test suite
 	```
 
 4. go back to your feature test file and **write your step definitions**
@@ -153,9 +156,9 @@ returns a function taking a identifier string as single parameter. That function
 
 ####VibratoBDD methods and properties
 
-* **describe**
+* **describe**, **describe**(***topicName***)
 
-	Use that property to start the chain for feature description. This object contains a single function named feature which create a feature function and add it in the **features** property of current VibratoBDD instance (see next).
+	Use that property to start the chain for feature description. This object contains a single function named feature which create a feature function and add it in the **features** property of current VibratoBDD instance (see next). Eventually use describe as a function to start a simple test description (see later).
 
 * **features**
 
@@ -184,6 +187,44 @@ returns a function taking a identifier string as single parameter. That function
 		An Array containing all the scenarios of the feature
 	* **block**
 		The function which will be called to run the test
+	* **state**
+		A string containing the state of the test ("in the suite", "running", "passed", "failed")
+
+* **descriptions**
+	
+	An object containing many Arrays :
+
+	* **descriptions.all**
+		All the simple descriptions tests in your test suite
+	* **descriptions.started**
+		The simple descriptions tests actually launched
+	* **descriptions.running**
+		The simple descriptions tests currently running
+	* **descriptions.passed**
+		The simple descriptions tests ended without error
+	* **descriptions.failed**
+		The simple descriptions tests ended with error
+
+	The structure of the descriptions objects listed in these Array is the following :
+
+	* **name**
+		A string containing the name of the described thing
+	* **specifications**
+		A Array containing all the "it" clauses about the described thing
+	* **block**
+		The function which will be called to run the test
+	* **state**
+		A string containing the state of the test ("in the suite", "running", "passed", "failed")
+
+* **testSuite**
+	
+	An object which contains both features tests and simple descriptions tests. It's an object like properties "features" and "descriptions" with keys "all", "started", "running", "passed" and "failed" Arrays. Each of these Array contains an object with the following structure :
+
+	* **type**
+		A string containing "feature" or "description" according to the type of test
+	* **test**
+		The test object with the structure above depending of it's a feature or simple description
+
 
 * **setResource**(***resourceName***, ***resource***)
 
@@ -201,7 +242,7 @@ returns a function taking a identifier string as single parameter. That function
 	require('vibrato-bdd')('my-project-test-identifier')
 
 	.excludeFeature("an-object-feature")
-	//Now, even if it's required in the runTestSuite latter, the feature named "an-object-feature" will be ignored
+	//Now, even if it's required in the buildTestSuite latter, the feature named "an-object-feature" will be ignored
 	```
 
 * **excludeTag**(***tagListToExclude***)
@@ -278,9 +319,13 @@ returns a function taking a identifier string as single parameter. That function
 
 	See In Browser Testing for examples.
 
-* **runTestSuite**(***requireTestSuiteFunction*** [, ***tagList***])
+* **buildTestSuite**(***requireTestSuiteFunction***)
+
+	***requireTestSuiteFunction*** must be a function. In it you have to require all your files containing features descriptions.
+
+* **runTestSuite**(***requireTestSuiteFunction*** [***tagList***])
 	
-	***requireTestSuiteFunction*** must be a function. In it you have to require all your file containing feature description. If ***tagList*** is a string, only the scenarios with a related tag matching one of those in ***tagList*** will be launched (Unless they were previously excluded), else it runs all your scenarios.
+	If ***tagList*** is a string, only the scenarios with a related tag matching one of those in ***tagList*** will be launched (Unless they were previously excluded), else it runs all your scenarios.
 
 * **TagList parameter**
 	
@@ -294,16 +339,16 @@ returns a function taking a identifier string as single parameter. That function
 
 	require('vibrato-bdd')('my-project-test-identifier')
 
-	.runTestSuite(function(){/*...*/}, 'animal & bunny cat')
+	.runTestSuite('animal & bunny cat')
 	//run the scenario related to ("animal" and "bunny"), or ("cat")
 
-	.runTestSuite(function(){/*...*/}, '(animal & bunny) cat')
+	.runTestSuite('(animal & bunny) cat')
 	//run the scenario related to ("animal" and "bunny"), or ("cat")
 
-	.runTestSuite(function(){/*...*/}, 'animal & (bunny cat)')
+	.runTestSuite('animal & (bunny cat)')
 	//run the scenario related to ("animal" and "bunny"), or ("animal" and "cat")
 
-	.runTestSuite(function(){/*...*/}, 'animal & bunny (painting & human & (animal & cat book & (dragon unicorn)))')
+	.runTestSuite('animal & bunny (painting & human & (animal & cat book & (dragon unicorn)))')
 	//run the scenario related to ("animal" and "bunny"),
 	//or ("painting" and "human" and "animal" and "cat"), 
 	//or ("painting" and "human" and "book" and "dragon"),
@@ -381,7 +426,7 @@ require('vibrato-bdd')('my-project-test-identifier')
 * **scenario**(***ScenarioName***)
 
 	Start to describe a scenario and returns an object with the given function as property
-	You can have multiple scenario for one feature. A scenario must have at least one "given" clause, one "when" clause and one "then" clause (in this order).
+	You can have multiple scenario for one feature. A scenario must have at least one "given" clause(unless a background was defined), one "when" clause and one "then" clause (in this order).
 	
 * **given**(***clauseName***), **when**(***clauseName***), **then**(***clauseName***), **and**(***clauseName***), **but**(***clauseName***)
 
@@ -410,6 +455,38 @@ require('vibrato-bdd')('my-test-identifier')
 		//do your very simple stuff
 		end();
 	})
+```
+
+#####Simple descriptions
+
+Sometimes, It can be sementically more convenient to not use the Gherkin syntax. Use that if what you have to describe is not really a feature neither a behaviour, but it's still a part of your specifications.
+
+```javascript
+var something = require('something');
+
+require('vibrato-bdd')('my-test-identifier')
+
+.describe('Something')
+
+.it("is an object for example")
+
+	(function (next){
+		assert.strictEqual(typeof something, "object");
+
+		next();
+	})
+
+.and.it("has a key named 'santa', for example again")
+
+	(function (next){
+		assert.strictEqual((something.santa !== undefined), true);
+
+		next();
+	})
+
+.but.it("I think you understood the idea...")
+
+//..........................................
 ```
 
 #####Outline examples
@@ -577,7 +654,7 @@ In addition to the examples function, you have three others ways to set datas in
 	```javascript
 	require('vibrato-bdd')('my-project-identifier')
 
-	.runTestSuite(function(){/*...*/}, 'poney cat');
+	.runTestSuite('poney cat');
 	```
 
 	or another one from the cli, when using the command "node test", with the --vibrato-tag (-vt) option :

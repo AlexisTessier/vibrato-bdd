@@ -13,7 +13,7 @@ var feature = function featureList(resources) {
 	/*
 	In order to know all features and their states
 	As a Developper
-	I Want an access to the feature list
+	I Want an access to the feature list property "features"
 	*/
 
 	var bdd = resources.VibratoBDD(resources.validIdentifier.new());
@@ -23,7 +23,7 @@ var feature = function featureList(resources) {
 		assert.strictEqual(typeof bdd.features, 'object',
 			trace('The property features of a VibratoBDD instance should be an object'));
 
-		var stateList = ['all', 'started', 'running', 'passed', 'failed'];
+		var stateList = resources.testStateList;
 		
 		_.forEach(stateList, function (state) {
 			assert.strictEqual(_.isArray(bdd.features[state]), true,

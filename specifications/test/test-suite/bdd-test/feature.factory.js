@@ -38,22 +38,22 @@ var feature = function factory(resources) {
 			var errorMessage = messages.error.usingTheFactoryWithAnUnvalidIdentifier(unvalidIdentifier);
 			
 			assert.throws(
-			  function() {
-			    VibratoBDDFactory(unvalidIdentifier);
-			  },
-			  resources.errorWithMessage(errorMessage),
-			  trace(notice + errorMessage)
+				function() {
+					VibratoBDDFactory(unvalidIdentifier);
+				},
+				resources.errorWithMessage(errorMessage),
+				trace(notice + errorMessage)
 			);
 		});
 
 		var errorMessage = messages.error.usingTheFactoryWithAnUnvalidIdentifier();
 
 		assert.throws(
-		  function() {
-		    VibratoBDDFactory();
-		  },
-		  resources.errorWithMessage(errorMessage),
-		  trace(notice + errorMessage)
+			function() {
+				VibratoBDDFactory();
+			},
+			resources.errorWithMessage(errorMessage),
+			trace(notice + errorMessage)
 		);
 	})
 

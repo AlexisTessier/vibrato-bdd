@@ -17,6 +17,9 @@ var feature = function feature(resources) {
 	*/
 
 	var bdd = resources.VibratoBDD(resources.validIdentifier.new());
+	var unvalidIdentifierList = resources.unvalidIdentifierList;
+
+	var messages = resources.specifications.messages.feature;
 
 	testSuite.scenario('Starting a feature with valid name (a non empty string)', function (trace) {
 		//Given I have a feature name
@@ -58,7 +61,31 @@ var feature = function feature(resources) {
 			trace("the feature added must have an block function"));
 	})
 
-	.scenario('Starting a feature with a unvalid name')
+	.scenario('Starting a feature with a unvalid name', function (trace) {
+		var notice = 'should throw an error with message : ';
+
+		var errorMessage = messages.error.startingAFeatureWithAUnvalidName(bdd.identifier);
+
+		assert.throws(
+			function() {
+				bdd.describe.feature();
+			},
+			resources.errorWithMessage(errorMessage),
+			trace(notice + errorMessage)
+		);
+
+		_.forEach(unvalidIdentifierList, function (unvalidIdentifier) {
+			var errorMessage = messages.error.startingAFeatureWithAUnvalidName(bdd.identifier, unvalidIdentifier);
+
+			assert.throws(
+				function() {
+					bdd.describe.feature();
+				},
+				resources.errorWithMessage(errorMessage),
+				trace(notice + errorMessage)
+			);
+		});
+	})
 	.scenario('Starting a yet defined feature (ignoring whitespace)')
 };
 

@@ -3,16 +3,10 @@
 var messages = {
 
 	canBeInstanciated : require('./can-be-instanciated'),
-	factory : require('./factory')
+	factory : require('./factory'),
+	feature : require('./feature')
 /*
 	errorMessage : {
-	
-	usingTheFactoryWithAnUnalidIdentifier : function (identifier) {
-		return ""+
-"The VibratoBDD function needs a string as identifier to instantiate and save a VibratoBDD object or retrieve a previously saved instance.\n"+
-"\""+identifier+"\" isn't a valid identifier";
-
-	},
 
 	usingRunTestSuiteWithoutFunctionAsParameter : function (identifier, func) {
 		return ""+
