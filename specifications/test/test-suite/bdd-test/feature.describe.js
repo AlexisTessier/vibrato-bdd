@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('assert');
+var _ = require('lodash');
 
 var feature = function _describe(resources) {
 	var testSuite = resources.testSuite;
@@ -16,6 +17,7 @@ var feature = function _describe(resources) {
 	*/
 
 	var bdd = resources.VibratoBDD(resources.validIdentifier.new());
+	var messages = resources.specifications.messages.describe;
 
 	testSuite.scenario("Get the describe function of an instance", function (trace) {
 		assert.strictEqual(typeof bdd.describe, 'function', trace('A VibratoBDD instance must have a describe property which is a function'));
@@ -53,11 +55,69 @@ var feature = function _describe(resources) {
 		assert.strictEqual(typeof lastAddedDescriptions.block, 'function',
 			trace("the description added must have an block function"));
 
+		assert.strictEqual(lastAddedDescriptions.state, "in the suite",
+			trace("the description added must have the state \"in the suite\""));
+
 		//And on the testSuite object
+		assert.strictEqual(all.length, countTest+1, 
+			trace("the describe function must add a test in the VibratoBDD instance testSuite.all Array"));
+
 		var lastAddedtest = _.last(all);
+		assert.strictEqual(lastAddedtest.type, "description",
+			trace("the test added must have the type \"description\""));
+
+		assert.deepEqual(lastAddedtest.test, lastAddedDescriptions,
+			trace("the test property of added test must contain the last added description"));
 	})
-	.scenario("Using the describe function with an unvalid name")
-	.scenario("Using the describe function to describe someyhing yet described (ignoring whitespace)")
+	.scenario("Using the describe function with an unvalid name", function (trace) {
+		var notice = 'should throw an error with message : ';
+
+		_.forEach(resources.unvalidIdentifierList, function (unvalidIdentifier) {
+			var errorMesage = messages.error.startingADescriptionWithAUnvalidName(bdd, unvalidIdentifier);
+
+			assert.throws(
+				function() {
+					bdd.describe(unvalidIdentifier);
+				},
+				resources.errorWithMessage(errorMessage),
+				trace(notice + errorMessage)
+			);
+		});
+
+		var errorMesage = messages.error.startingADescriptionWithAUnvalidName(bdd);
+
+		assert.throws(
+			function() {
+				bdd.describe();
+			},
+			resources.errorWithMessage(errorMessage),
+			trace(notice + errorMessage)
+		);
+	})
+	.scenario("Using the describe function to describe something yet described (ignoring case and whitespace)", function (trace) {
+		var notice = 'should throw an error with message : ';
+
+		//Given I have described something
+		var identifier = "	Describe  something for the 	describe   feature",
+			cleanIdentifier = "describe something for the describe feature";
+
+		var identifier2 = "	Describe  other thing for the 	describe   feature",
+			cleanIdentifier2 = "describe other thing for the describe feature";
+
+		bdd.describe(identifier);
+		bdd.describe(cleanIdentifier2);
+
+		//When I try to redescribe the same thing
+		//Then I have an error
+		/*assert.throws(
+			function() {
+				var errorMessage = messages.error.
+				bdd.describe(identifier);
+			},
+			resources.errorWithMessage(errorMessage),
+			trace(notice + errorMessage)
+		);*/
+	})
 };
 
 module.exports = feature;
