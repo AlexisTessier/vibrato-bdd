@@ -49,7 +49,7 @@ var testSuiteManager = {
 					scenarioTest(trace);
 				}
 				catch(e){
-					e.message = e.message.indexOf(traceStartMarker) === 0 ? e.message : trace(e.message);
+					e.message = e.message.indexOf(traceStartMarker) >= 0 ? e.message : trace(e.message);
 
 					if (testSuiteManager.context.isServer) {
 						e.message = chalk.red(e.message);

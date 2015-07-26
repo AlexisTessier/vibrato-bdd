@@ -44,7 +44,7 @@ var feature = function _describe(resources) {
 		assert.strictEqual(typeof lastAddedDescriptions, "object",
 			trace("a description in descriptions property should be an object"));
 
-		assert.strictEqual(lastAddedDescriptions.name, validName,
+		assert.strictEqual(lastAddedDescriptions.name, validTopicName,
 			trace("the description added must have the correct name"));
 
 		assert.strictEqual(_.isArray(lastAddedDescriptions.specifications), true,
@@ -73,7 +73,7 @@ var feature = function _describe(resources) {
 		var notice = 'should throw an error with message : ';
 
 		_.forEach(resources.unvalidIdentifierList, function (unvalidIdentifier) {
-			var errorMesage = messages.error.startingADescriptionWithAUnvalidName(bdd, unvalidIdentifier);
+			var errorMessage = messages.error.startingADescriptionWithAUnvalidName(bdd.identifier, unvalidIdentifier);
 
 			assert.throws(
 				function() {
@@ -84,7 +84,7 @@ var feature = function _describe(resources) {
 			);
 		});
 
-		var errorMesage = messages.error.startingADescriptionWithAUnvalidName(bdd);
+		var errorMessage = messages.error.startingADescriptionWithAUnvalidName(bdd.identifier);
 
 		assert.throws(
 			function() {
@@ -109,14 +109,23 @@ var feature = function _describe(resources) {
 
 		//When I try to redescribe the same thing
 		//Then I have an error
-		/*assert.throws(
+		var errorMessage = messages.error.describingAYetDescribedThing(bdd.identifier, cleanIdentifier);
+		assert.throws(
 			function() {
-				var errorMessage = messages.error.
-				bdd.describe(identifier);
+				bdd.describe(cleanIdentifier);
 			},
 			resources.errorWithMessage(errorMessage),
 			trace(notice + errorMessage)
-		);*/
+		);
+		
+		var errorMessage2 = messages.error.describingAYetDescribedThing(bdd.identifier, identifier2);
+		assert.throws(
+			function() {
+				bdd.describe(identifier2);
+			},
+			resources.errorWithMessage(errorMessage2),
+			trace(notice + errorMessage2)
+		);
 	})
 };
 

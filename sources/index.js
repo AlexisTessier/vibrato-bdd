@@ -22,6 +22,10 @@ var	initTestList = Symbol(),
 	createFeatureDescriptionSetter = Symbol(),
 	setFeatureNamed = Symbol(),
 
+	setDescriptionNamed = Symbol(),
+
+	descriptionExistYet = Symbol(),
+
 	start = Symbol();
 
 //private class method
@@ -64,7 +68,17 @@ class VibratoBDD {
 
 	//Init
 	[initDescribe](){
-		this.describe = function (topicName) {
+		this.describe = function VibratoBDD_describe(topicName) {
+			if(!VibratoBDD[identifierIsValid](topicName)){
+				throw new Error(messages.describe.error.startingADescriptionWithAUnvalidName(this.identifier, topicName));
+			}
+
+			if(this[descriptionExistYet](topicName)){
+				throw new Error(messages.describe.error.describingAYetDescribedThing(this.identifier, topicName));
+			}
+
+			this[setDescriptionNamed](topicName, function () {
+			});
 		};
 		this.describe.feature = this[createFeatureDescriber]();
 	}
@@ -122,6 +136,26 @@ class VibratoBDD {
 			block
 		});
 	}
+
+	//description
+	[setDescriptionNamed](name, block){
+		var test;
+		this.descriptions.all.push(test = this[indexedDescriptions][VibratoBDD[formatIdentifier](name)] = {
+			name,
+			specifications : [],
+			state : 'in the suite',
+			block
+		});
+
+		this.testSuite.all.push({
+			type : 'description',
+			test
+		});
+	}
+
+	[descriptionExistYet](name){
+		return typeof(this[indexedDescriptions][VibratoBDD[formatIdentifier](name)]) === 'object';
+	}
 }
 
 /*---------------------*/
@@ -143,7 +177,7 @@ VibratoBDD[identifierIsValid] = function (identifier) {
 };
 
 VibratoBDD[formatIdentifier] = function (inputValue) {
-	return _.camelCase(inputValue);
+	return _.camelCase(inputValue).toLowerCase();
 };
 
 /*---------------------*/
