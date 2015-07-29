@@ -5,7 +5,8 @@ var messages = {
 	canBeInstanciated : require('./can-be-instanciated'),
 	factory : require('./factory'),
 	feature : require('./feature'),
-	describe : require('./describe')
+	describe : require('./describe'),
+	it : require('./it')
 /*
 	errorMessage : {
 

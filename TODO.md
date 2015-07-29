@@ -4,8 +4,8 @@
 * factory -OK
 * test list (testSuite)-OK
 * description list (descriptions) -OK
-* describe -IN PROGRESS
-* it -
+* describe - OK
+* it - IN PROGRESS
 * it definition -
 * feature list (features)-OK
 * feature -IN PROGRESS

@@ -38,9 +38,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'specifications/test/browser-test.js': [ 'browserify'],
-      'lib/*.js': ['coverage'],
-      'lib/*/*.js': ['coverage']
+      'specifications/test/browser-test.js': [ 'browserify']
     },
 
     sauceLabs: {
@@ -54,12 +52,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage', 'saucelabs'],
-
-    coverageReporter : {
-      type : 'lcov',
-      dir : 'coverage/'
-    },
+    reporters: ['progress', 'saucelabs'],
 
     // web server port
     port: 9876,

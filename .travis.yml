@@ -7,7 +7,7 @@ before_install:
 after_install:
 - npm install -g karma-cli
 script:
-- istanbul cover specifications/test && karma start karma.conf-ci.js --single-run && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+- istanbul cover specifications/test && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf ./coverage
 env:
   global:
   - secure: AUb3B1lZpdVWa4O2uRbbSnWud9sMgoMlcKgS5Mktbkp4Xoi90b8H/xi6NDUaCtzm6Zcw5lIN/X//LjmvjRG+BJri4wmzhAq8QxoV6ZDn5/C9KGx542TyCqp5oXO8+e4FWbpIr/Wsl9bl62Xyu+URDAd0pIQjEJgCP1lADcEqnthHgla6QxK8JD9zAVnWsyMg/9EmUwVPyuj5svOaoMsxFNstRphbSeUfgGQtEgilUCQTiZv22TE6BSZgkbJJuFyEdpcThwSG0HOFGZIb3HRC81A+D/3bmDevI5rCdDjP5BCJde7ffij7VqQSZc6C9wgYYRixjhKeDT+OtTIzLbpgXbshYPn2J7wMXZDQIltO96hmmlEWuFcRPHObDGnz1/ym0MzDNdsv7CD7ZMLSmDlYYzZ8AioGBvZ6QfTTbb/VGogDuJGKpMEJhCqrUb/9T1+6MH+VlNjlOGBhOCV+IvXzDX1bb2nCqGKLoa5AfRf9/8p+D/0H5ItNEeQVTOaGx4fmfW1RtJzhFdWu0RhOrGGIdCNKdHaBzho2m0NLapSmJ9dkPF+n9MbJso7HAINZ4l1M6r0v4cmoWFrI9zIvm+waCILLyJtDLiZIHNXbvVoIHhilW80uY7AQzxhv9UPUY7yR4mn2Koye6ET3DVrFAs6nSyO4IEBseTLn4CY6Av/eZyI=
