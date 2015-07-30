@@ -1,13 +1,15 @@
 #Features
 
+Status (SCENARIO - STEP - STEP DEFINITION - PASS TEST - OK)
+
 * can be instanciated -OK
 * factory -OK
 * test list (testSuite)-OK
 * description list (descriptions) -OK
 * describe - OK
-* it - IN PROGRESS
-* it definition -
-* feature list (features)-OK
+* it - STEP
+* it definition - STEP
+* feature list (features)- OK
 * feature -IN PROGRESS
 * feature description -
 * scenario -
@@ -19,14 +21,14 @@
 * then step -
 * then step definition -
 * background -
+* build a test suite -
+* run a test suite -
 * resources can be added -
 * context object resource -
 * data step arguments in description -
 * data step arguments text -
 * data step arguments table -
 * outline examples -
-* build a test suite -
-* run a test suite -
 * features can be excluded -
 * tags -
 * tags can be excluded -

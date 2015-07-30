@@ -182,13 +182,16 @@ returns a function taking a identifier string as single parameter. That function
 	* **description**
 		A string containing the description of the feature
 	* **background**
-		An Array containing all the given clauses in the feature background
+		An Array containing all the given clauses in the feature background. A given clause is an object with the following keys :
+		* *description* (the description string of the clause)
+		* *stepDefinition* (the step definition function)
+
 	* **scenarioList**
 		An Array containing all the scenarios of the feature
 	* **block**
 		The function which will be called to run the test
 	* **state**
-		A string containing the state of the test ("in the suite", "running", "passed", "failed")
+		A string containing the state of the test ("in the suite", "running", "passed", "failed", "ignored")
 
 * **descriptions**
 	

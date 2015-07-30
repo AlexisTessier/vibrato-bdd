@@ -21,7 +21,7 @@ var feature = function it(resources) {
 
 	var messages = resources.specifications.messages.it;
 
-	testSuite.scenario('It function is accessible', function(trace) {
+	testSuite.scenario('Access to It function', function(trace) {
 		//describe('target').it
 	})
 	.scenario('Using It function with a valid assertion parameter (a non empty string)')
