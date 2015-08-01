@@ -4,15 +4,13 @@
 Vibrato BDD
 ===========
 
-Work in progress...
+![Project Status : work in progress](https://img.shields.io/badge/Project%20status-work%20in%20progress-lightgrey.svg)
 
 [![Features in Draft](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Draft&title=Feature%20draft)](http://waffle.io/AlexisTessier/vibrato-bdd)
 [![Features in Specs](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Specs&title=Feature%20specs)](http://waffle.io/AlexisTessier/vibrato-bdd)
 [![Features in Scenario](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Scenario&title=Feature%20scenario)](http://waffle.io/AlexisTessier/vibrato-bdd)
 [![Features in Test](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Test&title=Feature%20test)](http://waffle.io/AlexisTessier/vibrato-bdd)
 [![Features in Ready](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Ready&title=Feature%20ready)](http://waffle.io/AlexisTessier/vibrato-bdd)
-
-The module has not been written yet.
 
 I use this README and the [wiki](https://github.com/AlexisTessier/vibrato-bdd/wiki) as a guideline to write my specs.
 
@@ -144,4 +142,5 @@ Documentation
 * [Methods and properties](https://github.com/AlexisTessier/vibrato-bdd/wiki/Methods-and-properties)
 * [Description API](https://github.com/AlexisTessier/vibrato-bdd/wiki/Description-API)
 * [Tags](https://github.com/AlexisTessier/vibrato-bdd/wiki/Tags)
+* [Test status](https://github.com/AlexisTessier/vibrato-bdd/wiki/Test-status)
 * [Command line usage](https://github.com/AlexisTessier/vibrato-bdd/wiki/Command-line-usage)
