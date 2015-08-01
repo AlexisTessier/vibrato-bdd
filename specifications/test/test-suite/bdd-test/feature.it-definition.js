@@ -19,7 +19,7 @@ var feature = function itDefinition(resources) {
 	var bdd = resources.VibratoBDD(resources.validIdentifier.new());
 	var unvalidIdentifierList = resources.unvalidIdentifierList;
 
-	var messages = resources.specifications.messages.it;
+	var messages = resources.specifications.messages.itDefinition;
 
 	testSuite.scenario('Access to step definition function', function(trace) {
 		//describe('target').it
