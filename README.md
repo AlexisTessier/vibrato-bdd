@@ -6,6 +6,12 @@ Vibrato BDD
 
 Work in progress...
 
+[![Features in Draft](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Draft&title=Feature%20draft)](http://waffle.io/AlexisTessier/vibrato-bdd)
+[![Features in Specs](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Specs&title=Feature%20specs)](http://waffle.io/AlexisTessier/vibrato-bdd)
+[![Features in Scenario](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Scenario&title=Feature%20scenario)](http://waffle.io/AlexisTessier/vibrato-bdd)
+[![Features in Test](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Test&title=Feature%20test)](http://waffle.io/AlexisTessier/vibrato-bdd)
+[![Features in Ready](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Ready&title=Feature%20ready)](http://waffle.io/AlexisTessier/vibrato-bdd)
+
 The module has not been written yet.
 
 I use this README and the [wiki](https://github.com/AlexisTessier/vibrato-bdd/wiki) as a guideline to write my specs.
@@ -34,7 +40,7 @@ How to use
 
 1.	First, **create a "test" directory** at root of your project
 
-2.	then, **write your features tests** in distinct files in a "test-suite" directory for example (but organize them as you want)
+2.	then, **write your features scenario** in distinct files in a "test-suite" directory for example (but organize them as you want)
 
 	```javascript
 	/* my-project/test/test-suite/my-feature-test.js */
@@ -57,7 +63,7 @@ How to use
 	```javascript
 	/* my-project/test/index.js */
 
-	require('vibrato-bdd')('my-project-test-identifier')
+	require('vibrato-bdd')('My framework')
 	//create an instance of vibrato-bdd with an identifier
 
 	.setResource('deepEqual', require('my-deep-equal-function'))
@@ -80,8 +86,8 @@ How to use
 	//import your favorite assertion module
 	var assert = require('assert');
 
-	//add this line to import your vibrato-bdd instance
-	require('vibrato-bdd')('my-project-test-identifier')
+	//add this line to retrieve your vibrato-bdd instance
+	require('vibrato-bdd')('My framework')
 
 	.describe.feature("Deep equal function")(
 		"In order to know if two objects are identical",
