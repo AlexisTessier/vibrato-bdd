@@ -3,10 +3,10 @@
 var messages = {
 
 	canBeInstanciated : require('./can-be-instanciated'),
-	factory : require('./factory'),
-	feature : require('./feature'),
+	factory : require('./factory')//,
+	/*feature : require('./feature'),
 	describe : require('./describe'),
-	it : require('./it')
+	it : require('./it')*/
 /*
 	errorMessage : {
 

@@ -21,6 +21,10 @@
   ],
   "author": "Alexis Tessier <alexis.tessier@designdo.fr>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlexisTessier/vibrato-bdd/issues"
+  },
+  "homepage": "https://github.com/AlexisTessier/vibrato-bdd#readme",
   "devDependencies": {
     "coveralls": "^2.11.2",
     "gulp": "^3.9.0",
