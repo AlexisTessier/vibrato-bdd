@@ -33,15 +33,13 @@
     "karma": "^0.13.2",
     "karma-browserify": "^4.2.1",
     "karma-chrome-launcher": "^0.2.0",
-    "karma-coverage": "^0.4.2",
-    "karma-firefox-launcher": "^0.1.6",
     "karma-jasmine": "^0.3.6",
-    "karma-sauce-launcher": "^0.2.14"
+    "karma-sauce-launcher": "^0.2.14",
+    "source-map-support": "^0.3.2"
   },
   "dependencies": {
     "babel-runtime": "^5.7.0",
     "chalk": "^1.1.0",
-    "lodash": "^3.10.0",
-    "source-map-support": "^0.3.2"
+    "lodash": "^3.10.0"
   }
 }
