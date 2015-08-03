@@ -40,7 +40,7 @@ var testSuiteManager = {
 		if (typeof scenarioTest === "function") {
 			var trace = (function (featureID) {
 				return (function (message) {
-					return (traceStartMarker+featureID+'\nscenario : '+scenarioName+' \n error : '+message);
+					return (traceStartMarker+featureID+'\nscenario : '+scenarioName+' \n trace : '+message);
 				});
 			})(testSuiteManager.currentFeatureIdentifier);
 
