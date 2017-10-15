@@ -1,18 +1,9 @@
-[![Coverage Status](https://coveralls.io/repos/AlexisTessier/vibrato-bdd/badge.svg?branch=master&service=github)](https://coveralls.io/github/AlexisTessier/vibrato-bdd?branch=master)
-[![Build Status](https://travis-ci.org/AlexisTessier/vibrato-bdd.svg?branch=master)](https://travis-ci.org/AlexisTessier/vibrato-bdd)
-
 Vibrato BDD
 ===========
 
-![Project Status : work in progress](https://img.shields.io/badge/Project%20status-work%20in%20progress-lightgrey.svg)
+![Project Status : deprecated](https://img.shields.io/badge/Project%20Status-deprecated-red.svg)
 
-[![Features in Draft](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Draft&title=Feature%20draft)](http://waffle.io/AlexisTessier/vibrato-bdd)
-[![Features in Specs](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Specs&title=Feature%20specs)](http://waffle.io/AlexisTessier/vibrato-bdd)
-[![Features in Scenario](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Scenario&title=Feature%20scenario)](http://waffle.io/AlexisTessier/vibrato-bdd)
-[![Features in Test](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Test&title=Feature%20test)](http://waffle.io/AlexisTessier/vibrato-bdd)
-[![Features in Ready](https://badge.waffle.io/AlexisTessier/vibrato-bdd.svg?label=Ready&title=Feature%20ready)](http://waffle.io/AlexisTessier/vibrato-bdd)
-
-I use this README and the [wiki](https://github.com/AlexisTessier/vibrato-bdd/wiki) as a guideline to write my specs.
+**This module is currently deprecated. Never progressed to do it because no time/motivation then I discover [AVA](https://www.npmjs.com/package/ava).**
 
 About
 -----

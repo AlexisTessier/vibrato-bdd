@@ -1,6 +1,6 @@
 {
   "name": "vibrato-bdd",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A behaviour driven development framework working both on server and on browser",
   "main": "index.js",
   "repository": {
